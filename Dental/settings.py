@@ -9,6 +9,7 @@ pymysql.install_as_MySQLdb()
 
 from pathlib import Path
 import os
+import ssl
 import dj_database_url
 from dotenv import load_dotenv
 
@@ -119,6 +120,13 @@ DATABASE_URL = os.getenv('DATABASE_URL')
 if DATABASE_URL:
     DATABASES = {
         'default': dj_database_url.parse(DATABASE_URL, engine='django.db.backends.mysql')
+    }
+    # Configure SSL for PyMySQL on Aiven
+    ssl_context = ssl.create_default_context()
+    ssl_context.check_hostname = False
+    ssl_context.verify_mode = ssl.CERT_NONE
+    DATABASES['default']['OPTIONS'] = {
+        'ssl': ssl_context
     }
 else:
     DATABASES = {
