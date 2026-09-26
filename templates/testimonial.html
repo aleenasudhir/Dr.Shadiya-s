@@ -1,0 +1,725 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Patient Testimonials | Dr. Shadiya's Dental Clinic{% endblock %}
+
+{% block content %}
+
+<style>
+/* Base Page Styling */
+.testimonial-page {
+    background: #fbf9f5;
+    color: #1a2a26;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+.serif-font {
+    font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+}
+
+/* ================= LUXURY HERO SECTION ================= */
+.testimonial-hero {
+    position: relative;
+    min-height: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 20px 100px;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+/* Multi-layer Dark Emerald Vignette Overlay */
+.testimonial-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(circle at center, rgba(17, 30, 26, 0.72) 0%, rgba(10, 18, 16, 0.92) 100%),
+        linear-gradient(180deg, rgba(14, 24, 21, 0.4) 0%, rgba(14, 24, 21, 0.85) 100%);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 820px;
+    margin: 0 auto;
+}
+
+.hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #dfbe88;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 11.5px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+}
+
+.testimonial-hero h1 {
+    font-size: clamp(42px, 6.5vw, 70px);
+    line-height: 1.08;
+    font-weight: 400;
+    color: #ffffff;
+    margin: 0 0 20px;
+    text-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
+    letter-spacing: -0.5px;
+}
+
+.hero-subtitle {
+    max-width: 600px;
+    margin: 0 auto 36px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 16.5px;
+    line-height: 1.75;
+    font-weight: 300;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+/* Glassmorphism Google Reviews Badge */
+.google-badge-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    padding: 10px 24px;
+    border-radius: 50px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.google-badge-pill:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(223, 190, 136, 0.7);
+    transform: translateY(-3px);
+    box-shadow: 0 14px 40px rgba(0,0,0,0.35);
+}
+
+.google-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.google-rating-score {
+    font-weight: 700;
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.google-stars {
+    color: #ffc107;
+    letter-spacing: 2px;
+    font-size: 15px;
+}
+
+.google-count {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 13px;
+    border-left: 1px solid rgba(255, 255, 255, 0.3);
+    padding-left: 12px;
+    font-weight: 500;
+}
+
+/* ================= REVIEWS SECTION ================= */
+.reviews-section {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 90px 24px 110px;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-eyebrow {
+    color: #a4814e;
+    text-transform: uppercase;
+    letter-spacing: 3.5px;
+    font-size: 11px;
+    font-weight: 700;
+    display: inline-block;
+    margin-bottom: 12px;
+}
+
+.section-header h2 {
+    font-size: clamp(34px, 4.5vw, 50px);
+    font-weight: 400;
+    margin: 0;
+    color: #152622;
+}
+
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+}
+
+.review-card {
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid #eee7dc;
+    padding: 30px 26px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+}
+
+.review-card:hover {
+    transform: translateY(-6px);
+    border-color: #d8c3a3;
+    box-shadow: 0 20px 40px rgba(21, 38, 34, 0.08);
+}
+
+.card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.patient-profile {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 16px;
+    color: #ffffff;
+    flex-shrink: 0;
+}
+
+.avatar-teal { background: #00796b; }
+.avatar-slate { background: #455a64; }
+.avatar-t { background: #ad1457; }
+.avatar-k { background: #5c6bc0; }
+.avatar-s { background: #2e7d32; }
+.avatar-a { background: #1565c0; }
+
+.patient-meta h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a2a26;
+}
+
+.patient-meta span {
+    font-size: 12px;
+    color: #8c9794;
+}
+
+.card-stars {
+    color: #fbbc04;
+    font-size: 14px;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+}
+
+.review-text {
+    color: #40504c;
+    font-size: 14.5px;
+    line-height: 1.7;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.review-footer {
+    margin-top: 22px;
+    padding-top: 14px;
+    border-top: 1px solid #f2ede4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+}
+
+.verified-tag {
+    color: #3b7a57;
+    font-weight: 600;
+}
+
+.card-google-link {
+    color: #a4814e;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.card-google-link:hover {
+    color: #152622;
+    text-decoration: underline;
+}
+
+.google-reviews-action-wrap {
+    text-align: center;
+    margin-top: 55px;
+}
+
+.google-reviews-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #ffffff;
+    color: #152622;
+    border: 1px solid #dcd3c5;
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-size: 13.5px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+}
+
+.google-reviews-action-btn:hover {
+    background: #152622;
+    color: #ffffff;
+    border-color: #152622;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* ================= INSTAGRAM SECTION ================= */
+.instagram-section {
+    background: #14221f;
+    padding: 100px 24px;
+    color: #ffffff;
+}
+
+.instagram-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.instagram-heading {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.instagram-heading .section-eyebrow {
+    color: #dfbe88;
+}
+
+.instagram-heading h2 {
+    font-size: clamp(32px, 4.5vw, 50px);
+    font-weight: 400;
+    margin: 8px 0 14px;
+    color: #ffffff;
+}
+
+.instagram-heading p {
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 auto;
+    max-width: 540px;
+    line-height: 1.7;
+}
+
+.instagram-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+}
+
+.instagram-card {
+    background: #1e302b;
+    border-radius: 16px;
+    padding: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+}
+
+.instagram-card iframe {
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    border: 0;
+    border-radius: 10px;
+    display: block;
+}
+
+.instagram-button-wrapper {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.instagram-button {
+    display: inline-block;
+    padding: 14px 34px;
+    border-radius: 50px;
+    border: 1px solid rgba(223, 190, 136, 0.6);
+    color: #ffffff;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.instagram-button:hover {
+    background: #dfbe88;
+    border-color: #dfbe88;
+    color: #14221f;
+}
+
+/* ================= CTA SECTION ================= */
+.testimonial-cta {
+    text-align: center;
+    padding: 100px 24px;
+    background: #ede5d7;
+}
+
+.testimonial-cta h2 {
+    font-size: clamp(32px, 4.5vw, 50px);
+    font-weight: 400;
+    color: #152622;
+    margin: 10px 0 16px;
+}
+
+.testimonial-cta p {
+    color: #616e6a;
+    margin: 0 auto 35px;
+    max-width: 500px;
+    line-height: 1.7;
+}
+
+.appointment-btn {
+    display: inline-block;
+    padding: 16px 40px;
+    background: #152622;
+    color: #ffffff;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.appointment-btn:hover {
+    background: #a4814e;
+    transform: translateY(-2px);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 992px) {
+    .reviews-grid,
+    .instagram-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .reviews-grid,
+    .instagram-grid {
+        grid-template-columns: 1fr;
+    }
+    .testimonial-hero {
+        padding: 95px 16px 70px;
+        min-height: auto;
+    }
+    .reviews-section {
+        padding: 60px 16px 80px;
+    }
+    .google-badge-pill {
+        flex-direction: column;
+        gap: 6px;
+        padding: 14px 20px;
+        border-radius: 20px;
+    }
+    .google-count {
+        border-left: none;
+        padding-left: 0;
+    }
+}
+</style>
+
+<div class="testimonial-page">
+
+    <!-- HERO SECTION -->
+    <section class="testimonial-hero" style="background-image: url('{% static 'images/hero4.jpg' %}');">
+        <div class="hero-content">
+            <div class="hero-eyebrow">Patient Stories</div>
+            <h1 class="serif-font">Real Patients.<br>Real Smiles.</h1>
+            <p class="hero-subtitle">
+                Hear directly from the people who trusted Dr. Shadiya's Dental Clinic &amp; Implant Centre with their oral healthcare and smile makeovers.
+            </p>
+            
+            <!-- Glassmorphism Google Review Link -->
+            <a href="https://maps.google.com/?q=Dr.Shadiya’s+Dental+Clinic+%26+Implant+centre+Kaloor+Ernakulam" target="_blank" rel="noopener noreferrer" class="google-badge-pill">
+                <svg class="google-icon" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                </svg>
+                <span class="google-rating-score">5.0</span>
+                <div class="google-stars">★★★★★</div>
+                <span class="google-count">12 Genuine Google Reviews</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- REVIEWS SECTION -->
+    <section class="reviews-section">
+        <div class="section-header">
+            <div class="section-eyebrow">Verified Experiences</div>
+            <h2 class="serif-font">What Our Patients Say</h2>
+        </div>
+
+        <div class="reviews-grid">
+
+            <!-- Review 1: Aleena Sudhir -->
+            <article class="review-card">
+                <div>
+                    <div class="card-top">
+                        <div class="patient-profile">
+                            <div class="avatar avatar-teal">A</div>
+                            <div class="patient-meta">
+                                <h3>Aleena Sudhir</h3>
+                                <span>2 reviews</span>
+                            </div>
+                        </div>
+                        <svg class="google-icon" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                        </svg>
+                    </div>
+                    <div class="card-stars">★★★★★</div>
+                    <p class="review-text">
+                        "Had a great experience here, the doctor and staff were very friendly, the clinic was clean, and the treatment was smooth and comfortable."
+                    </p>
+                </div>
+                <div class="review-footer">
+                    <span class="verified-tag">✓ Google Verified</span>
+                    <a href="https://maps.google.com/?q=Dr.Shadiya’s+Dental+Clinic+%26+Implant+centre+Kaloor+Ernakulam" target="_blank" rel="noopener noreferrer" class="card-google-link">View on Google ↗</a>
+                </div>
+            </article>
+
+            <!-- Review 2: Diffin Benny -->
+            <article class="review-card">
+                <div>
+                    <div class="card-top">
+                        <div class="patient-profile">
+                            <div class="avatar avatar-slate">D</div>
+                            <div class="patient-meta">
+                                <h3>Diffin Benny</h3>
+                                <span>1 review &bull; 1 photo</span>
+                            </div>
+                        </div>
+                        <svg class="google-icon" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                        </svg>
+                    </div>
+                    <div class="card-stars">★★★★★</div>
+                    <p class="review-text">
+                        "Had a very comfortable and pleasant experience at the clinic. Dr shadiya was professional, explained everything clearly, and the treatment was smooth and painless. Highly recommended! 😊"
+                    </p>
+                </div>
+                <div class="review-footer">
+                    <span class="verified-tag">✓ Google Verified</span>
+                    <a href="https://maps.google.com/?q=Dr.Shadiya’s+Dental+Clinic+%26+Implant+centre+Kaloor+Ernakulam" target="_blank" rel="noopener noreferrer" class="card-google-link">View on Google ↗</a>
+                </div>
+            </article>
+
+            <!-- Review 3: Tanya Luiz -->
+            <article class="review-card">
+                <div>
+                    <div class="card-top">
+                        <div class="patient-profile">
+                            <div class="avatar avatar-t">T</div>
+                            <div class="patient-meta">
+                                <h3>Tanya Luiz</h3>
+                                <span>5 reviews</span>
+                            </div>
+                        </div>
+                        <svg class="google-icon" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                        </svg>
+                    </div>
+                    <div class="card-stars">★★★★★</div>
+                    <p class="review-text">
+                        "Shadiya is very professional and friendly too. I loved how she explained to me each and every detail for the concern I had. I would highly recommend this clinic! 💯"
+                    </p>
+                </div>
+                <div class="review-footer">
+                    <span class="verified-tag">✓ Google Verified</span>
+                    <a href="https://maps.google.com/?q=Dr.Shadiya’s+Dental+Clinic+%26+Implant+centre+Kaloor+Ernakulam" target="_blank" rel="noopener noreferrer" class="card-google-link">View on Google ↗</a>
+                </div>
+            </article>
+
+            <!-- Review 4: Kiran Karthikeyan -->
+            <article class="review-card">
+                <div>
+                    <div class="card-top">
+                        <div class="patient-profile">
+                            <div class="avatar avatar-k">K</div>
+                            <div class="patient-meta">
+                                <h3>kiran karthikeyan</h3>
+                                <span>3 reviews</span>
+                            </div>
+                        </div>
+                        <svg class="google-icon" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                        </svg>
+                    </div>
+                    <div class="card-stars">★★★★★</div>
+                    <p class="review-text">
+                        "I had good experience at shadiya's dental clinic .The dentist and staffs were incredibly knowledgeable and gentle , making sure I was comfortable throughout the entire procedure .iam so happy to for service thanku 🥰"
+                    </p>
+                </div>
+                <div class="review-footer">
+                    <span class="verified-tag">✓ Google Verified</span>
+                    <a href="https://maps.google.com/?q=Dr.Shadiya’s+Dental+Clinic+%26+Implant+centre+Kaloor+Ernakulam" target="_blank" rel="noopener noreferrer" class="card-google-link">View on Google ↗</a>
+                </div>
+            </article>
+
+            <!-- Review 5: Shazleena Shareef -->
+            <article class="review-card">
+                <div>
+                    <div class="card-top">
+                        <div class="patient-profile">
+                            <div class="avatar avatar-s">S</div>
+                            <div class="patient-meta">
+                                <h3>Shazleena Shareef</h3>
+                                <span>6 reviews &bull; 1 photo</span>
+                            </div>
+                        </div>
+                        <svg class="google-icon" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                        </svg>
+                    </div>
+                    <div class="card-stars">★★★★★</div>
+                    <p class="review-text">
+                        "Very professional doctor and nice clinic. She fix my root canal. I am happy I went there.."
+                    </p>
+                </div>
+                <div class="review-footer">
+                    <span class="verified-tag">✓ Google Verified</span>
+                    <a href="https://maps.google.com/?q=Dr.Shadiya’s+Dental+Clinic+%26+Implant+centre+Kaloor+Ernakulam" target="_blank" rel="noopener noreferrer" class="card-google-link">View on Google ↗</a>
+                </div>
+            </article>
+
+            <!-- Review 6: Abul Hisham -->
+            <article class="review-card">
+                <div>
+                    <div class="card-top">
+                        <div class="patient-profile">
+                            <div class="avatar avatar-a">A</div>
+                            <div class="patient-meta">
+                                <h3>Abul Hisham</h3>
+                                <span>5 reviews &bull; 3 photos</span>
+                            </div>
+                        </div>
+                        <svg class="google-icon" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                        </svg>
+                    </div>
+                    <div class="card-stars">★★★★★</div>
+                    <p class="review-text">
+                        "She is very good and professional. 100% worth it !"
+                    </p>
+                </div>
+                <div class="review-footer">
+                    <span class="verified-tag">✓ Google Verified</span>
+                    <a href="https://maps.google.com/?q=Dr.Shadiya’s+Dental+Clinic+%26+Implant+centre+Kaloor+Ernakulam" target="_blank" rel="noopener noreferrer" class="card-google-link">View on Google ↗</a>
+                </div>
+            </article>
+
+        </div>
+
+        <!-- Google Profile Button -->
+        <div class="google-reviews-action-wrap">
+            <a href="https://maps.google.com/?q=Dr.Shadiya’s+Dental+Clinic+%26+Implant+centre+Kaloor+Ernakulam" target="_blank" rel="noopener noreferrer" class="google-reviews-action-btn">
+                <svg class="google-icon" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                </svg>
+                Read All Reviews on Google Maps
+            </a>
+        </div>
+    </section>
+
+    <!-- INSTAGRAM -->
+    <section class="instagram-section">
+        <div class="instagram-inner">
+            <div class="instagram-heading">
+                <div class="section-eyebrow">Instagram Feed</div>
+                <h2 class="serif-font">More Patient Stories</h2>
+                <p>Watch treatment walkthroughs, transformations, and smiles on our Instagram.</p>
+            </div>
+
+            <div class="instagram-grid">
+                <div class="instagram-card">
+                    <iframe src="https://www.instagram.com/reel/Db5r65Gz-OK/embed/" scrolling="no" allowtransparency="true" allowfullscreen></iframe>
+                </div>
+                <div class="instagram-card">
+                    <iframe src="https://www.instagram.com/reel/DbdY1_UT1vB/embed/" scrolling="no" allowtransparency="true" allowfullscreen></iframe>
+                </div>
+                <div class="instagram-card">
+                    <iframe src="https://www.instagram.com/reel/DbIxHZIT4CM/embed/" scrolling="no" allowtransparency="true" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div class="instagram-button-wrapper">
+                <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="instagram-button">
+                    Follow On Instagram
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="testimonial-cta">
+        <div class="section-eyebrow">Your Smile Journey</div>
+        <h2 class="serif-font">Your Smile Could Be<br>Our Next Story</h2>
+        <p>Experience gentle, modern, and high-standard dental care tailored to you.</p>
+        <a href="{% url 'booking' %}" class="appointment-btn">
+            Book An Appointment
+        </a>
+    </section>
+
+</div>
+
+{% endblock %}

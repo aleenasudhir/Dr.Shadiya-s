@@ -1,0 +1,3544 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Dr. Shadiya's Dental Clinic & Implant Centre{% endblock %}
+
+{% block extra_css %}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================================================
+   LUXURY EDITORIAL DESIGN SYSTEM
+========================================================= */
+
+:root {
+    --dark-slate: #0F1410;
+    --dark-card: #161D18;
+
+    --accent-gold: #B9956D;
+    --accent-gold-light: #D4B896;
+    --accent-gold-dark: #9D7C54;
+
+    --bg-pure: #FFFFFF;
+    --bg-sand: #FAF7F2;
+    --bg-sand-subtle: #FDFCFB;
+
+    --text-primary: #1A1F1B;
+    --text-muted: #666E67;
+    --text-soft: #919B93;
+
+    --border-subtle: #E8E2D8;
+    --border-glass: rgba(255, 255, 255, 0.25);
+
+    --radius-pill: 9999px;
+    --radius-card: 22px;
+
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* =========================================================
+   GLOBAL RESET (STICKY NAVBAR FIX)
+========================================================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg-pure);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+}
+
+img {
+    max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+.serif-font {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+}
+
+p {
+    margin-top: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    font-family: inherit;
+}
+
+.lux-container {
+    width: min(92%, 1280px);
+    margin: 0 auto;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.btn-primary-dark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    padding: 15px 32px;
+
+    background: var(--accent-gold);
+    border: 1px solid var(--accent-gold);
+
+    color: #FFFFFF;
+
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+
+    border-radius: var(--radius-pill);
+
+    transition:
+        background 0.35s ease,
+        border-color 0.35s ease,
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.btn-primary-dark:hover {
+    background: var(--accent-gold-dark);
+    border-color: var(--accent-gold-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(185, 149, 109, 0.28);
+}
+
+.btn-pill-light {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    padding: 14px 28px;
+
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    backdrop-filter: blur(10px);
+
+    color: #FFFFFF;
+
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+
+    border-radius: var(--radius-pill);
+
+    transition: all 0.3s ease;
+}
+
+.btn-pill-light:hover {
+    border-color: var(--accent-gold-light);
+    background: rgba(185, 149, 109, 0.18);
+}
+
+/* =========================================================
+   SECTION LABEL
+========================================================= */
+
+.section-slash-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    font-size: 10.5px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+
+    color: var(--accent-gold);
+
+    margin-bottom: 8px;
+}
+
+.section-slash-tag::after {
+    content: '';
+
+    display: inline-block;
+
+    width: 24px;
+    height: 1px;
+
+    background: currentColor;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.mod-hero {
+    position: relative;
+
+    min-height: 86vh;
+
+    display: flex;
+    align-items: center;
+
+    background-color: #0d130e;
+
+    background-image:
+        linear-gradient(
+            90deg,
+            rgba(10, 15, 11, 0.92) 0%,
+            rgba(10, 15, 11, 0.68) 45%,
+            rgba(10, 15, 11, 0.22) 100%
+        ),
+        url("{% static 'images/hero1.jpg' %}");
+
+    background-size: cover;
+    background-position: center;
+
+    color: #FFFFFF;
+
+    border-radius: 0 0 32px 32px;
+
+    overflow: hidden;
+
+    padding: 65px 0;
+}
+
+.mod-hero-grid {
+    display: grid;
+
+    grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+
+    gap: 40px;
+
+    align-items: center;
+}
+
+.mod-hero-content {
+    min-width: 0;
+}
+
+.mod-hero-content h1 {
+    font-size: clamp(52px, 6.2vw, 84px);
+
+    font-weight: 400;
+
+    line-height: 1.02;
+
+    letter-spacing: -0.02em;
+
+    color: #FFFFFF;
+
+    margin: 0 0 20px;
+}
+
+.mod-hero-content h1 span.gold-italic {
+    color: var(--accent-gold-light);
+
+    font-style: italic;
+
+    font-weight: 300;
+}
+
+.mod-hero-content p {
+    font-size: 15px;
+
+    color: rgba(255, 255, 255, 0.82);
+
+    max-width: 520px;
+
+    line-height: 1.8;
+
+    font-weight: 300;
+
+    margin-bottom: 30px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.hero-glass-doctor-card {
+    width: 100%;
+    max-width: 380px;
+
+    margin-left: auto;
+
+    background: rgba(20, 28, 22, 0.65);
+
+    border: 1px solid var(--border-glass);
+
+    backdrop-filter: blur(16px);
+
+    border-radius: 20px;
+
+    padding: 18px 22px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+}
+
+.hero-glass-avatar {
+    width: 62px;
+    height: 62px;
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    background: var(--accent-gold);
+
+    flex-shrink: 0;
+
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.hero-glass-avatar img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+.hero-glass-info {
+    min-width: 0;
+}
+
+.hero-glass-info strong {
+    display: block;
+
+    font-family: var(--font-serif);
+
+    font-size: 20px;
+
+    font-weight: 500;
+
+    color: #FFFFFF;
+
+    margin-bottom: 2px;
+}
+
+.hero-glass-info span {
+    display: block;
+
+    font-size: 10.5px;
+
+    color: var(--accent-gold-light);
+
+    font-weight: 600;
+
+    letter-spacing: 0.05em;
+
+    text-transform: uppercase;
+
+    margin-bottom: 4px;
+}
+
+.hero-glass-meta {
+    font-size: 10.5px;
+
+    color: rgba(255, 255, 255, 0.65);
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.mod-stats-strip {
+    background: #FFFFFF;
+
+    padding: 30px 0 20px;
+
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.mod-stats-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 20px;
+}
+
+.stat-item {
+    text-align: left;
+
+    padding-left: 20px;
+
+    border-left: 1px solid var(--border-subtle);
+
+    min-width: 0;
+}
+
+.stat-item strong {
+    display: block;
+
+    font-family: var(--font-serif);
+
+    font-size: clamp(34px, 4vw, 44px);
+
+    font-weight: 500;
+
+    color: var(--text-primary);
+
+    line-height: 1;
+
+    margin-bottom: 4px;
+}
+
+.stat-item span {
+    font-size: 9.5px;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.16em;
+
+    color: var(--text-muted);
+}
+
+/* =========================================================
+   SERVICES
+========================================================= */
+
+.services-section-tight {
+    padding: 52px 0 60px;
+}
+
+.services-top-bar {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: flex-end;
+
+    margin-bottom: 32px;
+
+    gap: 40px;
+}
+
+.services-top-bar h2 {
+    font-size: clamp(36px, 4.4vw, 52px);
+
+    line-height: 1.05;
+
+    margin: 0;
+
+    color: var(--text-primary);
+}
+
+.services-top-bar h2 em {
+    color: var(--accent-gold);
+
+    font-style: italic;
+
+    font-weight: 300;
+}
+
+.services-top-bar p {
+    font-size: 13.5px;
+
+    color: var(--text-muted);
+
+    max-width: 440px;
+
+    margin: 0;
+
+    line-height: 1.7;
+
+    font-weight: 300;
+}
+
+.modern-services-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 20px;
+}
+
+.modern-service-card {
+    position: relative;
+
+    aspect-ratio: 3 / 4;
+
+    border-radius: var(--radius-card);
+
+    overflow: hidden;
+
+    background: #111713;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: flex-end;
+
+    padding: 24px;
+
+    color: #FFFFFF;
+
+    transition:
+        transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.45s ease;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.modern-service-card img {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    filter: brightness(0.88);
+
+    transition:
+        transform 0.65s ease,
+        filter 0.4s ease;
+
+    z-index: 1;
+}
+
+.modern-service-card::after {
+    content: '';
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            transparent 30%,
+            rgba(10, 15, 12, 0.95) 100%
+        );
+
+    z-index: 2;
+}
+
+.modern-service-card:hover {
+    transform: translateY(-6px);
+
+    box-shadow: 0 22px 45px rgba(0, 0, 0, 0.22);
+}
+
+.modern-service-card:hover img {
+    transform: scale(1.08);
+
+    filter: brightness(1);
+}
+
+.modern-service-content {
+    position: relative;
+
+    z-index: 3;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+
+    gap: 15px;
+}
+
+.modern-service-content > div:first-child {
+    min-width: 0;
+}
+
+.modern-service-content h3 {
+    font-family: var(--font-serif);
+
+    font-size: 23px;
+
+    font-weight: 500;
+
+    color: #FFFFFF;
+
+    margin: 0 0 4px;
+}
+
+.modern-service-content p {
+    font-size: 11.5px;
+
+    color: rgba(255, 255, 255, 0.72);
+
+    margin: 0;
+
+    line-height: 1.5;
+
+    font-weight: 300;
+}
+
+.modern-service-btn {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.2);
+
+    backdrop-filter: blur(8px);
+
+    border: 1px solid rgba(255, 255, 255, 0.4);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #FFFFFF;
+
+    font-size: 16px;
+
+    flex-shrink: 0;
+
+    transition: all 0.3s ease;
+}
+
+.modern-service-card:hover .modern-service-btn {
+    background: var(--accent-gold);
+
+    border-color: var(--accent-gold);
+
+    transform: rotate(-45deg);
+}
+
+/* =========================================================
+   BEFORE / AFTER (REFINED FIT & ALIGNMENT)
+========================================================= */
+
+.mod-ba-section {
+    position: relative;
+
+    background:
+        radial-gradient(
+            circle at 10% 20%,
+            rgba(185, 149, 109, 0.22) 0%,
+            transparent 40%
+        ),
+        radial-gradient(
+            circle at 90% 80%,
+            rgba(185, 149, 109, 0.18) 0%,
+            transparent 45%
+        ),
+        linear-gradient(
+            135deg,
+            #101612 0%,
+            #17211a 50%,
+            #0d120f 100%
+        );
+
+    color: #FFFFFF;
+
+    border-radius: 36px;
+
+    margin: 10px auto 20px;
+
+    width: min(94%, 1320px);
+
+    padding: clamp(65px, 7vw, 95px) 0;
+
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+
+    overflow: hidden;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mod-ba-section::before {
+    content: "TRANSFORM";
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    font-family: var(--font-serif);
+
+    font-size: clamp(90px, 16vw, 240px);
+
+    color: rgba(255, 255, 255, 0.02);
+
+    white-space: nowrap;
+
+    letter-spacing: 0.08em;
+
+    pointer-events: none;
+}
+
+.ba-heading {
+    text-align: center;
+
+    max-width: 620px;
+
+    margin: 0 auto 38px;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+.ba-heading h2 {
+    font-size: clamp(38px, 4.8vw, 56px);
+
+    margin: 0 0 10px;
+
+    color: #FFFFFF;
+}
+
+.ba-heading h2 em {
+    color: var(--accent-gold-light);
+
+    font-style: italic;
+
+    font-weight: 300;
+}
+
+.ba-heading p {
+    font-size: 14.5px;
+
+    color: rgba(255, 255, 255, 0.75);
+
+    font-weight: 300;
+
+    margin: 0;
+}
+
+.ba-centered-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 32px;
+
+    max-width: 880px;
+
+    margin: 0 auto;
+
+    position: relative;
+
+    z-index: 2;
+
+    align-items: stretch;
+}
+
+.ba-modern-card {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    background: rgba(255, 255, 255, 0.04);
+
+    backdrop-filter: blur(14px);
+
+    border-radius: var(--radius-card);
+
+    overflow: hidden;
+
+    border: 1px solid rgba(255, 255, 255, 0.14);
+
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ba-modern-card:hover {
+    transform: translateY(-6px) scale(1.015);
+
+    border-color: var(--accent-gold);
+
+    box-shadow: 0 28px 60px rgba(185, 149, 109, 0.25);
+}
+
+.ba-modern-photo {
+    position: relative;
+
+    aspect-ratio: 4 / 4.8;
+
+    width: 100%;
+
+    overflow: hidden;
+
+    background: #1e2620;
+}
+
+.ba-modern-photo img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center 25%;
+
+    display: block;
+
+    transition: transform 0.7s ease;
+}
+
+.ba-modern-card:hover .ba-modern-photo img {
+    transform: scale(1.06);
+}
+
+.ba-tag-floating {
+    position: absolute;
+
+    top: 18px;
+    left: 18px;
+
+    padding: 7px 18px;
+
+    background: rgba(12, 17, 14, 0.85);
+
+    backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
+
+    border-radius: var(--radius-pill);
+
+    color: #FFFFFF;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.2em;
+
+    text-transform: uppercase;
+    z-index: 3;
+}
+
+.ba-tag-floating.after {
+    background: var(--accent-gold);
+
+    color: #FFFFFF;
+
+    border-color: rgba(255, 255, 255, 0.35);
+}
+
+.ba-card-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 22px 28px 24px;
+
+    background: rgba(18, 25, 20, 0.82);
+
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ba-card-info h4 {
+    font-family: var(--font-serif);
+
+    font-size: 24px;
+
+    font-weight: 500;
+
+    margin: 0 0 6px;
+
+    color: #FFFFFF;
+}
+
+.ba-card-info p {
+    font-size: 13px;
+
+    color: rgba(255, 255, 255, 0.72);
+
+    margin: 0;
+
+    line-height: 1.65;
+
+    font-weight: 300;
+}
+
+/* =========================================================
+   DOCTOR SECTION
+========================================================= */
+
+.mod-section {
+    padding: 65px 0;
+}
+
+.doctor-split-section {
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+
+    gap: 50px;
+
+    align-items: center;
+}
+
+.doctor-media-frame {
+    position: relative;
+
+    border-radius: 28px;
+
+    overflow: hidden;
+
+    aspect-ratio: 4 / 4.2;
+
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.1);
+
+    background: #EAE3D2;
+}
+
+.doctor-media-frame img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+.doctor-floating-pill-card {
+    position: absolute;
+
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+
+    background: rgba(255, 255, 255, 0.92);
+
+    backdrop-filter: blur(16px);
+
+    border: 1px solid rgba(255, 255, 255, 0.6);
+
+    border-radius: 18px;
+
+    padding: 16px 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.doctor-card-title {
+    font-family: var(--font-serif);
+
+    font-size: 20px;
+
+    color: var(--text-primary);
+}
+
+.doctor-card-role {
+    font-size: 10.5px;
+
+    color: var(--accent-gold);
+
+    font-weight: 700;
+
+    letter-spacing: 0.1em;
+
+    text-transform: uppercase;
+}
+
+.doctor-specialist-badge {
+    font-size: 10px;
+
+    font-weight: 700;
+
+    background: var(--text-primary);
+
+    color: #fff;
+
+    padding: 6px 14px;
+
+    border-radius: var(--radius-pill);
+
+    letter-spacing: 0.1em;
+
+    text-transform: uppercase;
+
+    white-space: nowrap;
+}
+
+.doctor-split-content h2 {
+    font-size: clamp(38px, 4.8vw, 56px);
+
+    line-height: 1.05;
+
+    margin: 0 0 18px;
+
+    color: var(--text-primary);
+}
+
+.doctor-split-content h2 em {
+    color: var(--accent-gold);
+
+    font-style: italic;
+
+    font-weight: 300;
+}
+
+.doctor-split-content p {
+    font-size: 14.5px;
+
+    color: var(--text-muted);
+
+    line-height: 1.8;
+
+    font-weight: 300;
+
+    margin-bottom: 22px;
+}
+
+.doctor-credential-badges {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-bottom: 26px;
+}
+
+.cred-badge {
+    padding: 6px 14px;
+
+    border-radius: var(--radius-pill);
+
+    background: var(--bg-sand);
+
+    border: 1px solid var(--border-subtle);
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    color: var(--text-primary);
+}
+
+/* =========================================================
+   GOOGLE REVIEWS
+========================================================= */
+
+.reviews-section-tight {
+    background: var(--bg-sand);
+
+    border-top: 1px solid var(--border-subtle);
+
+    padding: 55px 0 40px;
+}
+
+.reviews-heading {
+    margin-bottom: 30px;
+}
+
+.reviews-heading h2 {
+    font-size: clamp(36px, 4.5vw, 52px);
+
+    margin: 0;
+}
+
+.reviews-heading h2 em {
+    color: var(--accent-gold);
+
+    font-style: italic;
+
+    font-weight: 300;
+}
+
+.google-reviews-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 22px;
+}
+
+.google-review-card {
+    background: #FFFFFF;
+
+    border: 1px solid var(--border-subtle);
+
+    border-radius: 20px;
+
+    padding: 26px 24px 20px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    min-width: 0;
+
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+
+    transition: all 0.35s ease;
+}
+
+.google-review-card:hover {
+    transform: translateY(-5px);
+
+    border-color: var(--accent-gold);
+
+    box-shadow: 0 16px 36px rgba(185, 149, 109, 0.12);
+}
+
+.g-review-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 14px;
+}
+
+.g-user-profile {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    min-width: 0;
+}
+
+.g-avatar {
+    width: 44px;
+    height: 44px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #FFFFFF;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    font-family: var(--font-sans);
+
+    flex-shrink: 0;
+}
+
+.g-avatar.teal {
+    background-color: #00796B;
+}
+
+.g-avatar.slate {
+    background-color: #37474F;
+}
+
+.g-avatar.crimson {
+    background-color: #A21B43;
+}
+
+.g-user-info {
+    min-width: 0;
+}
+
+.g-user-info strong {
+    display: block;
+
+    font-family: var(--font-serif);
+
+    font-size: 19px;
+
+    font-weight: 600;
+
+    color: var(--text-primary);
+
+    line-height: 1.15;
+}
+
+.g-user-info span {
+    font-size: 11px;
+
+    color: var(--text-soft);
+
+    font-weight: 400;
+}
+
+.google-g-icon {
+    width: 20px;
+    height: 20px;
+
+    flex-shrink: 0;
+}
+
+.g-stars {
+    color: #F4B400;
+
+    font-size: 14px;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 12px;
+}
+
+.g-quote-text {
+    font-size: 13.5px;
+
+    color: #3C423E;
+
+    line-height: 1.65;
+
+    font-weight: 300;
+
+    margin: 0 0 20px;
+
+    flex-grow: 1;
+}
+
+.g-review-footer {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding-top: 14px;
+
+    border-top: 1px solid #F0ECE4;
+
+    font-size: 11px;
+}
+
+.g-verified {
+    color: #0F9D58;
+
+    font-weight: 600;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 4px;
+}
+
+.g-view-link {
+    color: #8C7B6B;
+
+    font-weight: 500;
+
+    transition: color 0.2s ease;
+}
+
+.g-view-link:hover {
+    color: var(--accent-gold-dark);
+}
+
+/* =========================================================
+   FAQ
+========================================================= */
+
+.faq-section-seamless {
+    background: var(--bg-sand);
+
+    padding: 10px 0 65px;
+}
+
+.faq-heading {
+    text-align: center;
+
+    max-width: 600px;
+
+    margin: 0 auto 30px;
+}
+
+.faq-heading h2 {
+    font-size: clamp(36px, 4.5vw, 52px);
+
+    margin: 0 0 8px;
+}
+
+.faq-heading p {
+    font-size: 14px;
+
+    color: var(--text-muted);
+
+    font-weight: 300;
+
+    margin: 0;
+}
+
+.faq-modern-wrap {
+    max-width: 860px;
+
+    margin: 0 auto;
+}
+
+.faq-modern-item {
+    background: #FFFFFF;
+
+    border: 1px solid var(--border-subtle);
+
+    border-radius: 14px;
+
+    margin-bottom: 12px;
+
+    overflow: hidden;
+
+    transition: all 0.3s ease;
+
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+
+.faq-modern-item.active {
+    border-color: var(--accent-gold);
+
+    box-shadow: 0 8px 24px rgba(185, 149, 109, 0.1);
+}
+
+.faq-modern-btn {
+    width: 100%;
+
+    padding: 18px 24px;
+
+    background: transparent;
+
+    border: none;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    text-align: left;
+
+    font-family: var(--font-serif);
+
+    font-size: 21px;
+
+    font-weight: 500;
+
+    color: var(--text-primary);
+
+    cursor: pointer;
+
+    gap: 16px;
+}
+
+.faq-modern-btn > span:first-child {
+    min-width: 0;
+}
+
+.faq-plus-circle {
+    width: 30px;
+    height: 30px;
+
+    border-radius: 50%;
+
+    background: var(--bg-sand);
+
+    border: 1px solid var(--border-subtle);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-family: var(--font-sans);
+
+    font-size: 16px;
+
+    color: var(--accent-gold);
+
+    flex-shrink: 0;
+
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease,
+        color 0.3s ease;
+}
+
+.faq-modern-item.active .faq-plus-circle {
+    transform: rotate(45deg);
+
+    background: var(--accent-gold);
+
+    color: #FFFFFF;
+
+    border-color: var(--accent-gold);
+}
+
+.faq-modern-body {
+    max-height: 0;
+
+    overflow: hidden;
+
+    padding: 0 24px;
+
+    color: var(--text-muted);
+
+    font-size: 13.5px;
+
+    line-height: 1.75;
+
+    font-weight: 300;
+
+    transition:
+        max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        padding 0.3s ease;
+}
+
+.faq-modern-item.active .faq-modern-body {
+    padding: 0 24px 20px;
+}
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.mod-cta-section {
+    background: var(--dark-slate);
+
+    color: #FFFFFF;
+
+    padding: 55px 0;
+
+    border-radius: 32px 32px 0 0;
+}
+
+.mod-cta-inner {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 40px;
+}
+
+.mod-cta-inner h2 {
+    font-size: clamp(34px, 4vw, 48px);
+
+    margin: 0 0 8px;
+
+    color: #FFFFFF;
+}
+
+.mod-cta-inner p {
+    font-size: 14px;
+
+    color: rgba(255, 255, 255, 0.7);
+
+    font-weight: 300;
+
+    margin: 0;
+
+    max-width: 580px;
+}
+
+/* =========================================================
+   LARGE LAPTOP
+========================================================= */
+
+@media (max-width: 1200px) {
+
+    .lux-container {
+        width: min(92%, 1120px);
+    }
+
+    .modern-services-grid {
+        gap: 16px;
+    }
+
+    .modern-service-card {
+        padding: 20px;
+    }
+
+    .modern-service-content h3 {
+        font-size: 21px;
+    }
+
+    .doctor-split-section {
+        gap: 38px;
+    }
+}
+
+/* =========================================================
+   TABLET / SMALL LAPTOP
+========================================================= */
+
+@media (max-width: 1024px) {
+
+    .lux-container {
+        width: min(90%, 900px);
+    }
+
+    .mod-hero {
+        min-height: auto;
+
+        padding: 90px 0 80px;
+    }
+
+    .mod-hero-grid {
+        grid-template-columns: 1fr;
+
+        gap: 42px;
+    }
+
+    .mod-hero-content {
+        max-width: 720px;
+    }
+
+    .hero-glass-doctor-card {
+        margin-left: 0;
+    }
+
+    .mod-stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 25px 20px;
+    }
+
+    .modern-services-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 18px;
+    }
+
+    .modern-service-card {
+        aspect-ratio: 1 / 1.12;
+    }
+
+    .services-top-bar {
+        align-items: flex-start;
+    }
+
+    .services-top-bar p {
+        max-width: 360px;
+    }
+
+    .doctor-split-section {
+        grid-template-columns: 1fr;
+
+        gap: 45px;
+    }
+
+    .doctor-media-frame {
+        max-width: 650px;
+
+        margin: 0 auto;
+
+        width: 100%;
+    }
+
+    .doctor-split-content {
+        max-width: 720px;
+
+        margin: 0 auto;
+    }
+
+    .google-reviews-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .google-review-card:last-child {
+        grid-column: 1 / -1;
+
+        max-width: calc(50% - 11px);
+
+        width: 100%;
+
+        margin: 0 auto;
+    }
+
+    .mod-cta-inner {
+        gap: 30px;
+    }
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .lux-container {
+        width: min(91%, 680px);
+    }
+
+    .mod-hero {
+        padding: 75px 0 65px;
+
+        border-radius: 0 0 24px 24px;
+
+        background-position: 58% center;
+    }
+
+    .mod-hero::after {
+        content: '';
+
+        position: absolute;
+
+        inset: 0;
+
+        background: rgba(8, 13, 9, 0.08);
+
+        pointer-events: none;
+    }
+
+    .mod-hero-grid,
+    .mod-hero-content,
+    .hero-glass-doctor-card {
+        position: relative;
+
+        z-index: 2;
+    }
+
+    .mod-hero-content h1 {
+        font-size: clamp(46px, 11vw, 68px);
+
+        line-height: 0.98;
+
+        margin-bottom: 18px;
+    }
+
+    .mod-hero-content p {
+        font-size: 14px;
+
+        max-width: 600px;
+
+        line-height: 1.75;
+
+        margin-bottom: 26px;
+    }
+
+    .hero-buttons {
+        gap: 10px;
+    }
+
+    .btn-primary-dark,
+    .btn-pill-light {
+        padding: 14px 23px;
+
+        font-size: 10px;
+    }
+
+    .hero-glass-doctor-card {
+        max-width: 430px;
+    }
+
+    .mod-stats-strip {
+        padding: 25px 0 18px;
+    }
+
+    .stat-item {
+        padding-left: 16px;
+    }
+
+    .stat-item strong {
+        font-size: 37px;
+    }
+
+    .stat-item span {
+        font-size: 8.5px;
+
+        letter-spacing: 0.13em;
+    }
+
+    .services-section-tight {
+        padding: 45px 0 50px;
+    }
+
+    .services-top-bar {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+
+        margin-bottom: 25px;
+    }
+
+    .services-top-bar h2 {
+        font-size: clamp(38px, 9vw, 48px);
+    }
+
+    .services-top-bar p {
+        max-width: 600px;
+
+        font-size: 13px;
+    }
+
+    .modern-services-grid {
+        gap: 14px;
+    }
+
+    .modern-service-card {
+        padding: 20px;
+
+        border-radius: 19px;
+    }
+
+    .modern-service-content h3 {
+        font-size: 21px;
+    }
+
+    .modern-service-content p {
+        font-size: 10.5px;
+    }
+
+    .modern-service-btn {
+        width: 35px;
+        height: 35px;
+
+        font-size: 14px;
+    }
+
+    .mod-ba-section {
+        width: 94%;
+
+        border-radius: 27px;
+
+        padding: 60px 0;
+    }
+
+    .ba-heading {
+        padding: 0 10px;
+
+        margin-bottom: 28px;
+    }
+
+    .ba-heading h2 {
+        font-size: clamp(40px, 10vw, 50px);
+    }
+
+    .ba-heading p {
+        font-size: 13px;
+    }
+
+    .ba-centered-grid {
+        gap: 18px;
+    }
+
+    .ba-modern-card {
+        border-radius: 19px;
+    }
+
+    .ba-modern-photo {
+        aspect-ratio: 4 / 4.5;
+    }
+
+    .ba-card-info {
+        padding: 19px 21px 21px;
+    }
+
+    .ba-card-info h4 {
+        font-size: 22px;
+    }
+
+    .ba-card-info p {
+        font-size: 12px;
+    }
+
+    .doctor-floating-pill-card {
+        left: 15px;
+        right: 15px;
+        bottom: 15px;
+
+        padding: 14px 17px;
+    }
+
+    .doctor-card-title {
+        font-size: 18px;
+    }
+
+    .doctor-card-role {
+        font-size: 9px;
+    }
+
+    .doctor-specialist-badge {
+        font-size: 8px;
+
+        padding: 6px 10px;
+    }
+
+    .mod-section {
+        padding: 55px 0;
+    }
+
+    .doctor-split-section {
+        gap: 35px;
+    }
+
+    .doctor-split-content h2 {
+        font-size: clamp(40px, 9vw, 52px);
+    }
+
+    .doctor-split-content p {
+        font-size: 13.5px;
+
+        line-height: 1.75;
+    }
+
+    .reviews-section-tight {
+        padding: 45px 0 35px;
+    }
+
+    .reviews-heading {
+        margin-bottom: 25px;
+    }
+
+    .google-reviews-grid {
+        grid-template-columns: 1fr;
+
+        gap: 14px;
+    }
+
+    .google-review-card:last-child {
+        grid-column: auto;
+
+        max-width: none;
+
+        margin: 0;
+    }
+
+    .google-review-card {
+        padding: 23px 20px 18px;
+
+        border-radius: 18px;
+    }
+
+    .faq-section-seamless {
+        padding: 5px 0 50px;
+    }
+
+    .faq-heading {
+        margin-bottom: 24px;
+    }
+
+    .faq-heading h2 {
+        font-size: clamp(38px, 9vw, 50px);
+
+        line-height: 1.05;
+    }
+
+    .faq-heading p {
+        font-size: 13px;
+    }
+
+    .faq-modern-btn {
+        padding: 17px 18px;
+
+        font-size: 19px;
+    }
+
+    .faq-modern-body {
+        padding-left: 18px;
+        padding-right: 18px;
+
+        font-size: 13px;
+    }
+
+    .faq-modern-item.active .faq-modern-body {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .mod-cta-section {
+        padding: 48px 0;
+
+        border-radius: 25px 25px 0 0;
+    }
+
+    .mod-cta-inner {
+        flex-direction: column;
+
+        align-items: center;
+
+        text-align: center;
+
+        gap: 24px;
+    }
+
+    .mod-cta-inner h2 {
+        font-size: clamp(38px, 9vw, 48px);
+
+        line-height: 1.05;
+    }
+
+    .mod-cta-inner p {
+        font-size: 13px;
+
+        max-width: 600px;
+    }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 576px) {
+
+    .lux-container {
+        width: min(90%, 500px);
+    }
+
+    .section-slash-tag {
+        font-size: 9px;
+
+        letter-spacing: 0.2em;
+    }
+
+    .section-slash-tag::after {
+        width: 18px;
+    }
+
+    .mod-hero {
+        min-height: 620px;
+
+        padding: 60px 0 45px;
+
+        background-position: 62% center;
+    }
+
+    .mod-hero-content h1 {
+        font-size: clamp(43px, 12vw, 58px);
+
+        line-height: 0.97;
+
+        margin-bottom: 17px;
+    }
+
+    .mod-hero-content p {
+        font-size: 13px;
+
+        line-height: 1.75;
+
+        margin-bottom: 23px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+
+        align-items: stretch;
+
+        width: 100%;
+
+        max-width: 330px;
+    }
+
+    .btn-primary-dark,
+    .btn-pill-light {
+        width: 100%;
+
+        min-height: 48px;
+
+        padding: 13px 18px;
+    }
+
+    .hero-glass-doctor-card {
+        max-width: 100%;
+
+        padding: 14px 15px;
+
+        gap: 12px;
+
+        border-radius: 17px;
+    }
+
+    .hero-glass-avatar {
+        width: 52px;
+        height: 52px;
+
+        border-radius: 12px;
+    }
+
+    .hero-glass-info strong {
+        font-size: 18px;
+    }
+
+    .hero-glass-info span {
+        font-size: 9px;
+
+        line-height: 1.45;
+    }
+
+    .hero-glass-meta {
+        font-size: 9px;
+    }
+
+    .mod-stats-grid {
+        grid-template-columns: 1fr 1fr;
+
+        gap: 20px 10px;
+    }
+
+    .stat-item {
+        padding-left: 12px;
+    }
+
+    .stat-item strong {
+        font-size: 32px;
+    }
+
+    .stat-item span {
+        display: block;
+
+        font-size: 7.5px;
+
+        line-height: 1.4;
+
+        letter-spacing: 0.1em;
+    }
+
+    .services-section-tight {
+        padding: 42px 0 45px;
+    }
+
+    .services-top-bar h2 {
+        font-size: 40px;
+
+        line-height: 0.98;
+    }
+
+    .services-top-bar p {
+        font-size: 12.5px;
+
+        line-height: 1.7;
+    }
+
+    .modern-services-grid {
+        grid-template-columns: 1fr 1fr;
+
+        gap: 10px;
+    }
+
+    .modern-service-card {
+        aspect-ratio: 0.82;
+
+        padding: 15px;
+
+        border-radius: 16px;
+    }
+
+    .modern-service-card::after {
+        background:
+            linear-gradient(
+                180deg,
+                transparent 20%,
+                rgba(10, 15, 12, 0.97) 100%
+            );
+    }
+
+    .modern-service-content {
+        gap: 7px;
+    }
+
+    .modern-service-content h3 {
+        font-size: 18px;
+
+        line-height: 1.05;
+
+        margin-bottom: 5px;
+    }
+
+    .modern-service-content p {
+        font-size: 9px;
+
+        line-height: 1.35;
+    }
+
+    .modern-service-btn {
+        width: 30px;
+        height: 30px;
+
+        font-size: 12px;
+    }
+
+    .mod-ba-section {
+        width: 92%;
+
+        border-radius: 22px;
+
+        padding: 48px 0;
+    }
+
+    .mod-ba-section::before {
+        font-size: 90px;
+
+        transform:
+            translate(-50%, -50%)
+            rotate(-90deg);
+    }
+
+    .ba-heading {
+        margin-bottom: 23px;
+    }
+
+    .ba-heading h2 {
+        font-size: 41px;
+
+        line-height: 1;
+    }
+
+    .ba-heading p {
+        font-size: 12px;
+
+        line-height: 1.65;
+    }
+
+    .ba-centered-grid {
+        grid-template-columns: 1fr;
+
+        gap: 16px;
+
+        width: calc(100% - 4px);
+    }
+
+    .ba-modern-card:hover {
+        transform: translateY(-3px);
+    }
+
+    .ba-modern-photo {
+        aspect-ratio: 4 / 4.4;
+    }
+
+    .ba-tag-floating {
+        top: 12px;
+        left: 12px;
+
+        padding: 6px 13px;
+
+        font-size: 8px;
+    }
+
+    .ba-card-info {
+        padding: 17px 18px 19px;
+    }
+
+    .ba-card-info h4 {
+        font-size: 21px;
+    }
+
+    .ba-card-info p {
+        font-size: 11.5px;
+
+        line-height: 1.55;
+    }
+
+    .mod-section {
+        padding: 48px 0;
+    }
+
+    .doctor-media-frame {
+        aspect-ratio: 1 / 1.12;
+
+        border-radius: 21px;
+    }
+
+    .doctor-floating-pill-card {
+        left: 11px;
+        right: 11px;
+        bottom: 11px;
+
+        padding: 12px 13px;
+
+        border-radius: 15px;
+    }
+
+    .doctor-card-title {
+        font-size: 17px;
+    }
+
+    .doctor-card-role {
+        font-size: 8px;
+
+        line-height: 1.35;
+    }
+
+    .doctor-specialist-badge {
+        display: none;
+    }
+
+    .doctor-split-content h2 {
+        font-size: 42px;
+
+        line-height: 0.98;
+
+        margin-bottom: 17px;
+    }
+
+    .doctor-split-content p {
+        font-size: 12.8px;
+
+        line-height: 1.75;
+
+        margin-bottom: 17px;
+    }
+
+    .doctor-credential-badges {
+        gap: 6px;
+
+        margin-bottom: 22px;
+    }
+
+    .cred-badge {
+        padding: 6px 11px;
+
+        font-size: 9px;
+    }
+
+    .doctor-split-content .btn-primary-dark {
+        width: auto;
+
+        max-width: 100%;
+
+        min-height: 46px;
+    }
+
+    .reviews-section-tight {
+        padding: 42px 0 32px;
+    }
+
+    .reviews-heading h2 {
+        font-size: 40px;
+
+        line-height: 1;
+    }
+
+    .google-review-card {
+        padding: 21px 18px 17px;
+
+        border-radius: 17px;
+    }
+
+    .g-review-header {
+        margin-bottom: 11px;
+    }
+
+    .g-user-profile {
+        gap: 10px;
+    }
+
+    .g-avatar {
+        width: 40px;
+        height: 40px;
+
+        font-size: 16px;
+    }
+
+    .g-user-info strong {
+        font-size: 17px;
+    }
+
+    .g-user-info span {
+        font-size: 9.5px;
+    }
+
+    .google-g-icon {
+        width: 18px;
+        height: 18px;
+    }
+
+    .g-stars {
+        font-size: 12px;
+
+        margin-bottom: 10px;
+    }
+
+    .g-quote-text {
+        font-size: 12px;
+
+        line-height: 1.65;
+
+        margin-bottom: 17px;
+    }
+
+    .g-review-footer {
+        font-size: 9.5px;
+    }
+
+    .faq-section-seamless {
+        padding-bottom: 43px;
+    }
+
+    .faq-heading h2 {
+        font-size: 40px;
+
+        line-height: 0.98;
+    }
+
+    .faq-heading p {
+        font-size: 12px;
+
+        line-height: 1.65;
+    }
+
+    .faq-modern-item {
+        border-radius: 12px;
+
+        margin-bottom: 9px;
+    }
+
+    .faq-modern-btn {
+        padding: 15px 14px;
+
+        font-size: 18px;
+
+        line-height: 1.2;
+
+        gap: 10px;
+    }
+
+    .faq-plus-circle {
+        width: 27px;
+        height: 27px;
+
+        font-size: 14px;
+    }
+
+    .faq-modern-body {
+        font-size: 12px;
+
+        line-height: 1.7;
+
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .faq-modern-item.active .faq-modern-body {
+        padding-left: 14px;
+        padding-right: 14px;
+        padding-bottom: 17px;
+    }
+
+    .mod-cta-section {
+        padding: 43px 0;
+
+        border-radius: 21px 21px 0 0;
+    }
+
+    .mod-cta-inner h2 {
+        font-size: 40px;
+
+        line-height: 0.98;
+    }
+
+    .mod-cta-inner p {
+        font-size: 12px;
+
+        line-height: 1.7;
+    }
+
+    .mod-cta-inner .btn-primary-dark {
+        width: 100%;
+
+        max-width: 330px;
+    }
+}
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .lux-container {
+        width: 90%;
+    }
+
+    .mod-hero {
+        min-height: 590px;
+
+        padding-top: 50px;
+    }
+
+    .mod-hero-content h1 {
+        font-size: 42px;
+    }
+
+    .mod-hero-content p {
+        font-size: 12px;
+    }
+
+    .hero-glass-doctor-card {
+        padding: 12px;
+    }
+
+    .hero-glass-avatar {
+        width: 47px;
+        height: 47px;
+    }
+
+    .hero-glass-info strong {
+        font-size: 16px;
+    }
+
+    .hero-glass-info span {
+        font-size: 8px;
+    }
+
+    .hero-glass-meta {
+        font-size: 8px;
+    }
+
+    .stat-item strong {
+        font-size: 29px;
+    }
+
+    .modern-services-grid {
+        gap: 8px;
+    }
+
+    .modern-service-card {
+        padding: 12px;
+
+        border-radius: 14px;
+    }
+
+    .modern-service-content h3 {
+        font-size: 16px;
+    }
+
+    .modern-service-content p {
+        font-size: 8px;
+    }
+
+    .modern-service-btn {
+        width: 27px;
+        height: 27px;
+    }
+
+    .ba-heading h2,
+    .doctor-split-content h2,
+    .reviews-heading h2,
+    .faq-heading h2,
+    .mod-cta-inner h2 {
+        font-size: 37px;
+    }
+
+    .doctor-card-title {
+        font-size: 15px;
+    }
+
+    .doctor-card-role {
+        font-size: 7px;
+    }
+
+    .cred-badge {
+        font-size: 8px;
+
+        padding: 5px 9px;
+    }
+
+    .faq-modern-btn {
+        font-size: 16.5px;
+    }
+}
+
+/* =========================================================
+   REDUCE MOTION ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<!-- ======================================================
+     HERO
+====================================================== -->
+
+<section class="mod-hero" id="home">
+
+    <div class="lux-container">
+
+        <div class="mod-hero-grid">
+
+            <div class="mod-hero-content">
+
+                <div class="section-slash-tag"
+                     style="color: var(--accent-gold-light);">
+                    Premium Dental Care
+                </div>
+
+                <h1>
+                    Smiles That Last
+                    <br>
+                    <span class="gold-italic">
+                        a Lifetime.
+                    </span>
+                </h1>
+
+                <p>
+                    Thoughtful, personalized dental care combining
+                    advanced technology, specialist expertise, and a
+                    calming, comfortable atmosphere.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a href="{% url 'booking' %}"
+                       class="btn-primary-dark">
+
+                        Book Appointment
+                        <span>→</span>
+
+                    </a>
+
+                    <a href="{% url 'treatments' %}"
+                       class="btn-pill-light">
+
+                        Explore Treatments
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div>
+
+                <div class="hero-glass-doctor-card">
+
+                    <div class="hero-glass-avatar">
+
+                        <img
+                            src="{% static 'images/doctor.jpg' %}"
+                            alt="Dr. Shadiya Shareef"
+                        >
+
+                    </div>
+
+                    <div class="hero-glass-info">
+
+                        <strong>
+                            Dr. Shadiya Shareef
+                        </strong>
+
+                        <span>
+                            BDS, MDS, ICOI ·
+                            <br>
+                            Periodontist and Oral Implantologist
+                        </span>
+
+                        <div class="hero-glass-meta">
+                            Specialist Dental Care · Kaloor, Kochi
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ======================================================
+     STATS
+====================================================== -->
+
+<section class="mod-stats-strip">
+
+    <div class="lux-container mod-stats-grid">
+
+        <div class="stat-item">
+
+            <strong>98%</strong>
+
+            <span>
+                Patient Satisfaction
+            </span>
+
+        </div>
+
+        <div class="stat-item">
+
+            <strong>100%</strong>
+
+            <span>
+                Personalized Care
+            </span>
+
+        </div>
+
+        <div class="stat-item">
+
+            <strong>MDS</strong>
+
+            <span>
+                Specialist Precision
+            </span>
+
+        </div>
+
+        <div class="stat-item">
+
+            <strong>4.9 ★</strong>
+
+            <span>
+                Customer Rating
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ======================================================
+     SERVICES
+====================================================== -->
+
+<section class="services-section-tight" id="services">
+
+    <div class="lux-container">
+
+        <div class="services-top-bar">
+
+            <div>
+
+                <div class="section-slash-tag">
+                    Our Treatments
+                </div>
+
+                <h2>
+                    Designed around
+                    <br>
+                    <em>your smile.</em>
+                </h2>
+
+            </div>
+
+            <p>
+                From replacing missing teeth to improving alignment,
+                discover treatments tailored to your oral health in a
+                calm, welcoming environment.
+            </p>
+
+        </div>
+
+
+        <div class="modern-services-grid">
+
+            <a href="{% url 'treatments' %}"
+               class="modern-service-card">
+
+                <img
+                    src="{% static 'images/implant.jpg' %}"
+                    alt="Dental Implants"
+                >
+
+                <div class="modern-service-content">
+
+                    <div>
+
+                        <h3>
+                            Dental Implants
+                        </h3>
+
+                        <p>
+                            Permanent solutions for missing teeth
+                        </p>
+
+                    </div>
+
+                    <div class="modern-service-btn">
+                        →
+                    </div>
+
+                </div>
+
+            </a>
+
+
+            <a href="{% url 'treatments' %}"
+               class="modern-service-card">
+
+                <img
+                    src="{% static 'images/aligner.jpg' %}"
+                    alt="Clear Aligners"
+                >
+
+                <div class="modern-service-content">
+
+                    <div>
+
+                        <h3>
+                            Clear Aligners
+                        </h3>
+
+                        <p>
+                            Straighten your smile discreetly
+                        </p>
+
+                    </div>
+
+                    <div class="modern-service-btn">
+                        →
+                    </div>
+
+                </div>
+
+            </a>
+
+
+            <a href="{% url 'treatments' %}"
+               class="modern-service-card">
+
+                <img
+                    src="{% static 'images/laser.jpg' %}"
+                    alt="Laser Smile Makeover"
+                >
+
+                <div class="modern-service-content">
+
+                    <div>
+
+                        <h3>
+                            Laser Makeover
+                        </h3>
+
+                        <p>
+                            Aesthetic precision &amp; gentle care
+                        </p>
+
+                    </div>
+
+                    <div class="modern-service-btn">
+                        →
+                    </div>
+
+                </div>
+
+            </a>
+
+
+            <a href="{% url 'treatments' %}"
+               class="modern-service-card">
+
+                <img
+                    src="{% static 'images/hero2.jpg' %}"
+                    alt="Complete Dental Care"
+                >
+
+                <div class="modern-service-content">
+
+                    <div>
+
+                        <h3>
+                            Complete Care
+                        </h3>
+
+                        <p>
+                            Routine checkups &amp; prevention
+                        </p>
+
+                    </div>
+
+                    <div class="modern-service-btn">
+                        →
+                    </div>
+
+                </div>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ======================================================
+     BEFORE / AFTER
+====================================================== -->
+
+<section class="mod-ba-section">
+
+    <div class="lux-container">
+
+        <div class="ba-heading">
+
+            <div class="section-slash-tag"
+                 style="justify-content:center;
+                        color:var(--accent-gold-light);">
+
+                Smile Transformation
+
+            </div>
+
+            <h2>
+
+                See the
+                <em>difference.</em>
+
+            </h2>
+
+            <p>
+                From correcting alignment and shade imbalances to harmonizing the smile line with precision aesthetic care.
+            </p>
+
+        </div>
+
+
+        <div class="ba-centered-grid">
+
+            <div class="ba-modern-card">
+
+                <div class="ba-modern-photo">
+
+                    <img
+                        src="{% static 'images/before.png' %}"
+                        alt="Patient smile before aesthetic treatment"
+                    >
+
+                    <span class="ba-tag-floating">
+                        Before
+                    </span>
+
+                </div>
+
+                <div class="ba-card-info">
+
+                    <h4>
+                        Initial Presentation
+                    </h4>
+
+                    <p>
+                        Uneven alignment, shade discoloration, and wear along the incisal edges requiring structural and aesthetic rejuvenation.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="ba-modern-card">
+
+                <div class="ba-modern-photo">
+
+                    <img
+                        src="{% static 'images/after.png' %}"
+                        alt="Patient smile after aesthetic treatment"
+                    >
+
+                    <span class="ba-tag-floating after">
+                        After
+                    </span>
+
+                </div>
+
+                <div class="ba-card-info">
+
+                    <h4>
+                        Smile Makeover
+                    </h4>
+
+                    <p>
+                        A balanced, brighter smile achieved with ceramic aesthetic restorations, refined contouring, and natural translucency.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ======================================================
+     DOCTOR
+====================================================== -->
+
+<section class="mod-section">
+
+    <div class="lux-container">
+
+        <div class="doctor-split-section">
+
+            <div class="doctor-media-frame">
+
+                <img
+                    src="{% static 'images/doc2.jpg' %}"
+                    alt="Dr. Shadiya Shareef"
+                >
+
+                <div class="doctor-floating-pill-card">
+
+                    <div>
+
+                        <strong class="doctor-card-title">
+                            Dr. Shadiya Shareef
+                        </strong>
+
+                        <div class="doctor-card-role">
+                            Periodontist &amp;
+                            Oral Implantologist
+                        </div>
+
+                    </div>
+
+                    <span class="doctor-specialist-badge">
+                        Implant Specialist
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="doctor-split-content">
+
+                <div class="section-slash-tag">
+                    Meet Your Dentist
+                </div>
+
+                <h2>
+                    Dentistry with a
+                    <em>personal touch.</em>
+                </h2>
+
+                <p>
+                    Dr. Shadiya believes that excellent dental care
+                    begins by listening to each patient's concerns,
+                    expectations, and individual needs.
+                </p>
+
+                <p>
+                    Every treatment journey is approached with
+                    dedicated attention to comfort, precision, and
+                    long-term oral health.
+                </p>
+
+                <div class="doctor-credential-badges">
+
+                    <span class="cred-badge">
+                        BDS
+                    </span>
+
+                    <span class="cred-badge">
+                        MDS (Periodontics)
+                    </span>
+
+                    <span class="cred-badge">
+                        Oral Implantologist
+                    </span>
+
+                </div>
+
+                <a href="{% url 'about' %}"
+                   class="btn-primary-dark">
+
+                    Learn More About Dr. Shadiya
+                    <span>→</span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ======================================================
+     GOOGLE REVIEWS
+====================================================== -->
+
+<section class="reviews-section-tight">
+
+    <div class="lux-container">
+
+        <div class="reviews-heading">
+
+            <div class="section-slash-tag">
+                Patient Experiences
+            </div>
+
+            <h2>
+                Smiles speak for
+                <em>themselves.</em>
+            </h2>
+
+        </div>
+
+
+        <div class="google-reviews-grid">
+
+            <!-- REVIEW 1 -->
+
+            <div class="google-review-card">
+
+                <div>
+
+                    <div class="g-review-header">
+
+                        <div class="g-user-profile">
+
+                            <div class="g-avatar teal">
+                                A
+                            </div>
+
+                            <div class="g-user-info">
+
+                                <strong>
+                                    Aleena Sudhir
+                                </strong>
+
+                                <span>
+                                    2 reviews
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <svg class="google-g-icon"
+                             viewBox="0 0 24 24">
+
+                            <path
+                                fill="#4285F4"
+                                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                            />
+
+                            <path
+                                fill="#34A853"
+                                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                            />
+
+                            <path
+                                fill="#FBBC05"
+                                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
+                            />
+
+                            <path
+                                fill="#EA4335"
+                                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
+                            />
+
+                        </svg>
+
+                    </div>
+
+                    <div class="g-stars">
+                        ★★★★★
+                    </div>
+
+                    <p class="g-quote-text">
+                        "Had a great experience here, the doctor and
+                        staff were very friendly, the clinic was clean,
+                        and the treatment was smooth and comfortable."
+                    </p>
+
+                </div>
+
+                <div class="g-review-footer">
+
+                    <span class="g-verified">
+                        ✓ Google Verified
+                    </span>
+
+                    <a
+                        href="https://maps.google.com/?q=Dr.Shadiya’s+Dental+Clinic+%26+Implant+centre+Kaloor+Ernakulam"
+                        target="_blank"
+                        rel="noopener"
+                        class="g-view-link"
+                    >
+                        View on Google ↗
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- REVIEW 2 -->
+
+            <div class="google-review-card">
+
+                <div>
+
+                    <div class="g-review-header">
+
+                        <div class="g-user-profile">
+
+                            <div class="g-avatar slate">
+                                D
+                            </div>
+
+                            <div class="g-user-info">
+
+                                <strong>
+                                    Diffin Benny
+                                </strong>
+
+                                <span>
+                                    1 review • 1 photo
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <svg class="google-g-icon"
+                             viewBox="0 0 24 24">
+
+                            <path
+                                fill="#4285F4"
+                                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                            />
+
+                            <path
+                                fill="#34A853"
+                                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                            />
+
+                            <path
+                                fill="#FBBC05"
+                                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
+                            />
+
+                            <path
+                                fill="#EA4335"
+                                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
+                            />
+
+                        </svg>
+
+                    </div>
+
+                    <div class="g-stars">
+                        ★★★★★
+                    </div>
+
+                    <p class="g-quote-text">
+                        "Had a very comfortable and pleasant experience
+                        at the clinic. Dr shadiya was professional,
+                        explained everything clearly, and the treatment
+                        was smooth and painless. Highly recommended! 😊"
+                    </p>
+
+                </div>
+
+                <div class="g-review-footer">
+
+                    <span class="g-verified">
+                        ✓ Google Verified
+                    </span>
+
+                    <a
+                        href="https://maps.google.com/?q=Dr.Shadiya’s+Dental+Clinic+%26+Implant+centre+Kaloor+Ernakulam"
+                        target="_blank"
+                        rel="noopener"
+                        class="g-view-link"
+                    >
+                        View on Google ↗
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- REVIEW 3 -->
+
+            <div class="google-review-card">
+
+                <div>
+
+                    <div class="g-review-header">
+
+                        <div class="g-user-profile">
+
+                            <div class="g-avatar crimson">
+                                T
+                            </div>
+
+                            <div class="g-user-info">
+
+                                <strong>
+                                    Tanya Luiz
+                                </strong>
+
+                                <span>
+                                    5 reviews
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <svg class="google-g-icon"
+                             viewBox="0 0 24 24">
+
+                            <path
+                                fill="#4285F4"
+                                d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                            />
+
+                            <path
+                                fill="#34A853"
+                                d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                            />
+
+                            <path
+                                fill="#FBBC05"
+                                d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"
+                            />
+
+                            <path
+                                fill="#EA4335"
+                                d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
+                            />
+
+                        </svg>
+
+                    </div>
+
+                    <div class="g-stars">
+                        ★★★★★
+                    </div>
+
+                    <p class="g-quote-text">
+                        "Shadiya is very professional and friendly too.
+                        I loved how she explained to me each and every
+                        detail for the concern I had. I would highly
+                        recommend this clinic! 💯"
+                    </p>
+
+                </div>
+
+                <div class="g-review-footer">
+
+                    <span class="g-verified">
+                        ✓ Google Verified
+                    </span>
+
+                    <a
+                        href="https://maps.google.com/?q=Dr.Shadiya’s+Dental+Clinic+%26+Implant+centre+Kaloor+Ernakulam"
+                        target="_blank"
+                        rel="noopener"
+                        class="g-view-link"
+                    >
+                        View on Google ↗
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ======================================================
+     FAQ
+====================================================== -->
+
+<section class="faq-section-seamless">
+
+    <div class="lux-container">
+
+        <div class="faq-heading">
+
+            <div class="section-slash-tag"
+                 style="justify-content:center;">
+
+                FAQs
+
+            </div>
+
+            <h2>
+                Frequently Asked Questions
+            </h2>
+
+            <p>
+                Clear answers to common questions about appointments,
+                consultations, and treatments.
+            </p>
+
+        </div>
+
+
+        <div class="faq-modern-wrap">
+
+            <div class="faq-modern-item">
+
+                <button
+                    class="faq-modern-btn"
+                    type="button"
+                    aria-expanded="false"
+                >
+
+                    <span>
+                        Do I need to know what treatment I need
+                        before booking?
+                    </span>
+
+                    <span class="faq-plus-circle">
+                        +
+                    </span>
+
+                </button>
+
+                <div class="faq-modern-body">
+
+                    <p style="margin:0;">
+                        No. You can simply book a consultation.
+                        Your dental needs can be assessed and
+                        suitable options will be discussed with you.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="faq-modern-item">
+
+                <button
+                    class="faq-modern-btn"
+                    type="button"
+                    aria-expanded="false"
+                >
+
+                    <span>
+                        Are the dental procedures painful?
+                    </span>
+
+                    <span class="faq-plus-circle">
+                        +
+                    </span>
+
+                </button>
+
+                <div class="faq-modern-body">
+
+                    <p style="margin:0;">
+                        We focus on gentle, minimally invasive dental
+                        care using modern numbing techniques to help
+                        make treatments comfortable.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="faq-modern-item">
+
+                <button
+                    class="faq-modern-btn"
+                    type="button"
+                    aria-expanded="false"
+                >
+
+                    <span>
+                        Can I book my appointment online?
+                    </span>
+
+                    <span class="faq-plus-circle">
+                        +
+                    </span>
+
+                </button>
+
+                <div class="faq-modern-body">
+
+                    <p style="margin:0;">
+                        Yes. You can choose an available date and
+                        appointment time directly through our online
+                        booking system.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ======================================================
+     CTA
+====================================================== -->
+
+<section class="mod-cta-section">
+
+    <div class="lux-container mod-cta-inner">
+
+        <div>
+
+            <h2>
+                Your smile deserves thoughtful care.
+            </h2>
+
+            <p>
+                Whether you need a routine check-up, implants,
+                or a full smile transformation, begin with a
+                personalized consultation.
+            </p>
+
+        </div>
+
+        <a href="{% url 'booking' %}"
+           class="btn-primary-dark">
+
+            Book Your Appointment
+            <span>→</span>
+
+        </a>
+
+    </div>
+
+</section>
+
+<!-- ======================================================
+     FAQ SCRIPT
+====================================================== -->
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const faqItems =
+        document.querySelectorAll('.faq-modern-item');
+
+
+    faqItems.forEach(function (item) {
+
+        const btn =
+            item.querySelector('.faq-modern-btn');
+
+        const body =
+            item.querySelector('.faq-modern-body');
+
+
+        btn.addEventListener('click', function () {
+
+            const isOpen =
+                item.classList.contains('active');
+
+
+            faqItems.forEach(function (otherItem) {
+
+                otherItem.classList.remove('active');
+
+                const otherBody =
+                    otherItem.querySelector('.faq-modern-body');
+
+                const otherButton =
+                    otherItem.querySelector('.faq-modern-btn');
+
+
+                otherBody.style.maxHeight = null;
+
+                otherButton.setAttribute(
+                    'aria-expanded',
+                    'false'
+                );
+
+            });
+
+
+            if (!isOpen) {
+
+                item.classList.add('active');
+
+                btn.setAttribute(
+                    'aria-expanded',
+                    'true'
+                );
+
+                body.style.maxHeight =
+                    body.scrollHeight + 'px';
+
+            }
+
+        });
+
+    });
+
+});
+
+</script>
+
+{% endblock %}

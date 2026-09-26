@@ -1,0 +1,1215 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Treatments | Dr.Shadiya's Dental Clinic
+{% endblock %}
+
+{% block extra_css %}
+
+<style>
+
+/* ==============================
+   TREATMENTS HERO
+============================== */
+
+.treatments-hero{
+    position:relative;
+    min-height:620px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    color:white;
+}
+
+/* Background Carousel */
+
+.hero-carousel{
+    position:absolute;
+    inset:0;
+    z-index:0;
+}
+
+.hero-slide{
+    position:absolute;
+    inset:0;
+
+    background-size:cover;
+    background-position:center;
+
+    opacity:0;
+    transform:scale(1.05);
+
+    transition:
+        opacity 1.5s ease,
+        transform 6s ease;
+}
+
+.hero-slide.active{
+    opacity:1;
+    transform:scale(1);
+}
+
+
+/* Overlay */
+
+.hero-overlay{
+    position:absolute;
+    inset:0;
+    z-index:1;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(15,35,61,0.78),
+            rgba(15,35,61,0.55),
+            rgba(15,35,61,0.35)
+        );
+}
+
+
+/* Content */
+
+.treatments-hero .container{
+    position:relative;
+    z-index:2;
+    width:90%;
+    max-width:1100px;
+}
+
+.treatments-hero-content{
+    max-width:850px;
+    margin:auto;
+    text-align:center;
+}
+
+.treatments-tag{
+    display:inline-block;
+    margin-bottom:25px;
+
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:4px;
+    text-transform:uppercase;
+
+    color:#d9e8f5;
+}
+
+.treatments-hero h1{
+    font-size:clamp(48px,6vw,82px);
+    line-height:1.08;
+    margin-bottom:30px;
+    color:white;
+}
+
+.treatments-hero p{
+    max-width:750px;
+    margin:auto;
+
+    font-size:18px;
+    line-height:1.8;
+
+    color:rgba(255,255,255,0.88);
+}
+
+
+/* ==============================
+   TREATMENTS SECTION
+============================== */
+
+.treatments-section{
+    padding:100px 0;
+    background:#ffffff;
+}
+
+.section-heading{
+    text-align:center;
+    max-width:750px;
+    margin:0 auto 60px;
+}
+
+.section-heading span{
+    display:block;
+    color:#4a6fa5;
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-bottom:15px;
+}
+
+.section-heading h2{
+    font-size:42px;
+    color:#183153;
+    margin-bottom:20px;
+}
+
+.section-heading p{
+    color:#6b7280;
+    line-height:1.8;
+    font-size:16px;
+}
+
+
+/* ==============================
+   TREATMENT GRID
+============================== */
+
+.treatments-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:30px;
+}
+
+.treatment-card{
+    background:#ffffff;
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+    overflow:hidden;
+    transition:.4s ease;
+    position:relative;
+}
+
+.treatment-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 45px rgba(0,0,0,0.10);
+}
+
+
+/* ==============================
+   TREATMENT IMAGE
+============================== */
+
+.treatment-image{
+    height:260px;
+    overflow:hidden;
+    background:#f5f5f5;
+}
+
+.treatment-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.5s ease;
+}
+
+.treatment-card:hover .treatment-image img{
+    transform:scale(1.05);
+}
+
+
+/* ==============================
+   TREATMENT CONTENT
+============================== */
+
+.treatment-content{
+    padding:30px;
+}
+
+.treatment-number{
+    font-size:13px;
+    color:#4a6fa5;
+    font-weight:600;
+    letter-spacing:1px;
+    margin-bottom:12px;
+}
+
+.treatment-content h3{
+    font-size:26px;
+    color:#183153;
+    margin-bottom:15px;
+}
+
+.treatment-content p{
+    color:#6b7280;
+    line-height:1.7;
+    font-size:15px;
+    margin-bottom:20px;
+}
+
+.learn-more{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    color:#183153;
+    font-size:14px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.learn-more:hover{
+    color:#4a6fa5;
+    gap:12px;
+}
+
+
+/* ==============================
+   FEATURE SECTION
+============================== */
+
+.treatment-feature{
+    background:#faf7f2;
+    padding:100px 0;
+}
+
+.feature-container{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:70px;
+    align-items:center;
+}
+
+.feature-image{
+    height:550px;
+    border-radius:18px;
+    overflow:hidden;
+}
+
+.feature-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.feature-content span{
+    color:#4a6fa5;
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
+
+.feature-content h2{
+    color:#183153;
+    font-size:44px;
+    margin:18px 0 25px;
+    line-height:1.25;
+}
+
+.feature-content p{
+    color:#6b7280;
+    line-height:1.8;
+    margin-bottom:20px;
+}
+
+.feature-list{
+    margin-top:30px;
+}
+
+.feature-list li{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:15px;
+    color:#374151;
+    font-size:15px;
+}
+
+.feature-list li::before{
+    content:'✓';
+    width:24px;
+    height:24px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#183153;
+    color:white;
+    border-radius:50%;
+    font-size:12px;
+}
+
+
+/* ==============================
+   CTA
+============================== */
+
+.treatment-cta{
+    padding:100px 0;
+    background:#183153;
+    text-align:center;
+    color:white;
+}
+
+.treatment-cta-content{
+    max-width:750px;
+    margin:auto;
+}
+
+.treatment-cta h2{
+    font-size:42px;
+    margin-bottom:20px;
+}
+
+.treatment-cta p{
+    color:#dbe4ef;
+    line-height:1.8;
+    margin-bottom:35px;
+}
+
+.cta-button{
+    display:inline-block;
+    background:white;
+    color:#183153;
+    padding:15px 32px;
+    border-radius:50px;
+    font-size:14px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.cta-button:hover{
+    background:#faf7f2;
+    transform:translateY(-3px);
+}
+
+
+/* ==============================
+   RESPONSIVE
+============================== */
+
+/* ========================================
+   RESPONSIVE DESIGN
+======================================== */
+
+
+/* ========================================
+   TABLETS & SMALL LAPTOPS
+======================================== */
+
+@media (max-width: 1200px){
+
+    .container{
+        width:90%;
+    }
+
+    /* HERO */
+
+    .treatments-hero{
+        min-height:560px;
+    }
+
+    .treatments-hero h1{
+        font-size:64px;
+    }
+
+    .treatments-hero p{
+        font-size:17px;
+        max-width:700px;
+    }
+
+
+    /* TREATMENT CARDS */
+
+    .treatments-grid{
+        grid-template-columns:repeat(2, 1fr);
+        gap:25px;
+    }
+
+    .treatment-image{
+        height:350px;
+    }
+
+
+    /* FEATURE SECTION */
+
+    .feature-container{
+        gap:50px;
+    }
+
+    .feature-image{
+        height:500px;
+    }
+
+    .feature-content h2{
+        font-size:44px;
+    }
+
+}
+
+
+/* ========================================
+   TABLETS
+======================================== */
+
+@media (max-width: 992px){
+
+    /* HERO */
+
+    .treatments-hero{
+        min-height:520px;
+        padding:80px 0;
+    }
+
+    .treatments-hero h1{
+        font-size:48px;
+        line-height:1.15;
+    }
+
+    .treatments-hero p{
+        font-size:16px;
+        line-height:1.7;
+        max-width:650px;
+    }
+
+    .treatments-tag{
+        font-size:13px;
+        letter-spacing:3px;
+    }
+
+
+    /* CARDS */
+
+    .treatments-grid{
+        grid-template-columns:repeat(2, 1fr);
+        gap:25px;
+    }
+
+    .treatment-image{
+        height:320px;
+    }
+
+    .treatment-image img{
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        object-position:center;
+    }
+
+
+    /* FEATURE SECTION */
+
+    .feature-container{
+        grid-template-columns:1fr;
+        gap:50px;
+    }
+
+    .feature-image{
+        width:100%;
+        height:500px;
+    }
+
+    .feature-image img{
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        object-position:center;
+    }
+
+    .feature-content{
+        width:100%;
+    }
+
+    .feature-content h2{
+        font-size:42px;
+    }
+
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 768px){
+
+    /* HERO */
+
+    .treatments-hero{
+        min-height:520px;
+        padding:80px 20px;
+    }
+
+    .treatments-hero-content{
+        max-width:100%;
+    }
+
+    .treatments-hero h1{
+        font-size:38px;
+        line-height:1.15;
+    }
+
+    .treatments-hero p{
+        font-size:15px;
+        line-height:1.7;
+        max-width:100%;
+    }
+
+    .treatments-tag{
+        font-size:12px;
+        letter-spacing:2.5px;
+        margin-bottom:18px;
+    }
+
+
+    /* HERO CAROUSEL */
+
+    .hero-slide{
+        background-position:center center;
+        background-size:cover;
+    }
+
+
+    /* TREATMENTS SECTION */
+
+    .treatments-section{
+        padding:70px 0;
+    }
+
+    .section-heading{
+        text-align:center;
+    }
+
+    .section-heading h2{
+        font-size:34px;
+        line-height:1.2;
+    }
+
+    .section-heading p{
+        font-size:15px;
+        line-height:1.7;
+    }
+
+
+    /* TREATMENT GRID */
+
+    .treatments-grid{
+        grid-template-columns:1fr;
+        gap:25px;
+    }
+
+
+    /* TREATMENT CARD */
+
+    .treatment-card{
+        width:100%;
+    }
+
+    .treatment-image{
+        width:100%;
+        height:300px;
+    }
+
+    .treatment-image img{
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        object-position:center;
+    }
+
+    .treatment-content{
+        padding:30px 25px;
+    }
+
+    .treatment-content h3{
+        font-size:28px;
+    }
+
+    .treatment-content p{
+        font-size:15px;
+        line-height:1.7;
+    }
+
+
+    /* FEATURE SECTION */
+
+    .feature-container{
+        grid-template-columns:1fr;
+        gap:40px;
+    }
+
+    .feature-image{
+        width:100%;
+        height:400px;
+        border-radius:15px;
+        overflow:hidden;
+    }
+
+    .feature-image img{
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        object-position:center;
+    }
+
+    .feature-content{
+        width:100%;
+    }
+
+    .feature-content h2{
+        font-size:34px;
+        line-height:1.2;
+    }
+
+    .feature-content p{
+        font-size:15px;
+        line-height:1.7;
+    }
+
+
+    /* FEATURE LIST */
+
+    .feature-list{
+        gap:15px;
+    }
+
+    .feature-list li{
+        font-size:15px;
+    }
+
+
+    /* CTA */
+
+    .treatment-cta{
+        padding:70px 20px;
+    }
+
+    .treatment-cta h2{
+        font-size:34px;
+        line-height:1.2;
+    }
+
+    .treatment-cta p{
+        font-size:15px;
+        line-height:1.7;
+    }
+
+}
+
+
+/* ========================================
+   SMALL MOBILE PHONES
+======================================== */
+
+@media (max-width: 480px){
+
+    .container{
+        width:92%;
+    }
+
+
+    /* HERO */
+
+    .treatments-hero{
+        min-height:500px;
+        padding:70px 15px;
+    }
+
+    .treatments-hero h1{
+        font-size:32px;
+    }
+
+    .treatments-hero p{
+        font-size:14px;
+        line-height:1.7;
+    }
+
+    .treatments-tag{
+        font-size:11px;
+        letter-spacing:2px;
+    }
+
+
+    /* TREATMENT SECTION */
+
+    .treatments-section{
+        padding:60px 0;
+    }
+
+    .section-heading h2{
+        font-size:30px;
+    }
+
+
+    /* CARD IMAGE */
+
+    .treatment-image{
+        height:250px;
+    }
+
+    .treatment-content{
+        padding:25px 20px;
+    }
+
+    .treatment-content h3{
+        font-size:25px;
+    }
+
+    .treatment-content p{
+        font-size:14px;
+    }
+
+
+    /* FEATURE IMAGE */
+
+    .feature-image{
+        height:300px;
+        border-radius:12px;
+    }
+
+    .feature-image img{
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        object-position:center;
+    }
+
+
+    /* FEATURE CONTENT */
+
+    .feature-content h2{
+        font-size:30px;
+    }
+
+    .feature-content p{
+        font-size:14px;
+    }
+
+
+    /* CTA */
+
+    .treatment-cta{
+        padding:60px 20px;
+    }
+
+    .treatment-cta h2{
+        font-size:30px;
+    }
+
+}
+
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+
+<!-- ==============================
+     HERO SECTION
+============================== -->
+
+<section class="treatments-hero">
+
+    <!-- Background Carousel -->
+    <div class="hero-carousel">
+
+    <div class="hero-slide active"
+         style="background-image: url('{% static "images/hero1.jpg" %}')">
+    </div>
+
+    <div class="hero-slide"
+         style="background-image: url('{% static "images/hero5.jpg" %}')">
+    </div>
+
+    <div class="hero-slide"
+         style="background-image: url('{% static "images/hero3.jpg" %}')">
+    </div>
+
+</div>
+
+    <!-- Overlay -->
+    <div class="hero-overlay"></div>
+
+
+    <!-- Hero Content -->
+    <div class="container">
+
+        <div class="treatments-hero-content">
+
+            <span class="treatments-tag">
+                OUR TREATMENTS
+            </span>
+
+            <h1>
+                Advanced Care for Your
+                <br>
+                Healthier Smile
+            </h1>
+
+            <p>
+                From advanced dental implants and clear aligners
+                to preventive and restorative care, we provide
+                personalised dental treatments designed around
+                your comfort, confidence, and long-term oral health.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==============================
+     TREATMENTS GRID
+============================== -->
+
+<section class="treatments-section">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span>
+                What We Offer
+            </span>
+
+            <h2>
+                Comprehensive Dental Care
+            </h2>
+
+            <p>
+                Our clinic offers a range of modern dental treatments
+                using advanced technology and personalised treatment
+                plans to help you achieve a healthy and confident smile.
+            </p>
+
+        </div>
+
+
+        <div class="treatments-grid">
+
+
+            <!-- ALIGNERS -->
+
+            <div class="treatment-card">
+
+                <div class="treatment-image">
+
+                    <img src="{% static 'images/aligner.jpg' %}" alt="Clear Aligners">
+
+                </div>
+
+                <div class="treatment-content">
+
+                    <div class="treatment-number">
+                        01
+                    </div>
+
+                    <h3>
+                        Clear Aligners
+                    </h3>
+
+                    <p>
+                        Straighten your teeth discreetly with
+                        comfortable and nearly invisible clear
+                        aligners designed to improve your smile.
+                    </p>
+
+                    <a href="{% url 'booking' %}" class="learn-more">
+                        Learn More →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- DENTAL IMPLANTS -->
+
+            <div class="treatment-card">
+
+                <div class="treatment-image">
+
+                    <img src="{% static 'images/implant.jpg' %}" alt="Dental Implants">
+
+                </div>
+
+                <div class="treatment-content">
+
+                    <div class="treatment-number">
+                        02
+                    </div>
+
+                    <h3>
+                        Dental Implants
+                    </h3>
+
+                    <p>
+                        Restore missing teeth with strong,
+                        natural-looking dental implants that
+                        help bring back function and confidence.
+                    </p>
+
+                    <a href="{% url 'booking' %}" class="learn-more">
+                        Learn More →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- LASER DENTISTRY -->
+
+            <div class="treatment-card">
+
+                <div class="treatment-image">
+
+                    <img src="{% static 'images/laser.jpg' %}" alt="Laser Dentistry">
+
+                </div>
+
+                <div class="treatment-content">
+
+                    <div class="treatment-number">
+                        03
+                    </div>
+
+                    <h3>
+                        Laser Dentistry
+                    </h3>
+
+                    <p>
+                        Experience modern dental care with
+                        advanced laser technology designed for
+                        precise and comfortable procedures.
+                    </p>
+
+                    <a href="{% url 'booking' %}" class="learn-more">
+                        Learn More →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- ROOT CANAL -->
+
+            <div class="treatment-card">
+
+                <div class="treatment-image">
+
+                    <img src="{% static 'images/rootcanal.png' %}" alt="Root Canal Treatment">
+
+                </div>
+
+                <div class="treatment-content">
+
+                    <div class="treatment-number">
+                        04
+                    </div>
+
+                    <h3>
+                        Root Canal Treatment
+                    </h3>
+
+                    <p>
+                        Save infected or damaged teeth with
+                        effective root canal treatment focused
+                        on restoring comfort and function.
+                    </p>
+
+                    <a href="{% url 'booking' %}" class="learn-more">
+                        Learn More →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- BRACES -->
+
+            <div class="treatment-card">
+
+                <div class="treatment-image">
+
+                    <img src="{% static 'images/braces.jpg' %}" alt="Braces">
+
+                </div>
+
+                <div class="treatment-content">
+
+                    <div class="treatment-number">
+                        05
+                    </div>
+
+                    <h3>
+                        Dental Braces
+                    </h3>
+
+                    <p>
+                        Correct misaligned teeth and improve your
+                        bite with personalised orthodontic treatment
+                        designed for a healthier smile.
+                    </p>
+
+                    <a href="{% url 'booking' %}" class="learn-more">
+                        Learn More →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- TEETH WHITENING -->
+
+            <div class="treatment-card">
+
+                <div class="treatment-image">
+
+                    <img src="{% static 'images/teethwhite.jpg' %}" alt="Teeth Whitening">
+
+                </div>
+
+                <div class="treatment-content">
+
+                    <div class="treatment-number">
+                        06
+                    </div>
+
+                    <h3>
+                        Teeth Whitening
+                    </h3>
+
+                    <p>
+                        Brighten your smile with professional
+                        teeth whitening treatments for a fresher,
+                        cleaner, and more confident appearance.
+                    </p>
+
+                    <a href="{% url 'booking' %}" class="learn-more">
+                        Learn More →
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==============================
+     FEATURED TREATMENT
+============================== -->
+
+<section class="treatment-feature">
+
+    <div class="container feature-container">
+
+        <div class="feature-image">
+
+            <img
+                src="{% static 'images/align3.jpg' %}"
+                alt="Clear Aligners Treatment"
+            >
+
+        </div>
+
+
+        <div class="feature-content">
+
+            <span>
+                Smile Transformation
+            </span>
+
+            <h2>
+                Your Dream Smile,
+                Made Simple
+            </h2>
+
+            <p>
+                Clear aligners offer a discreet and comfortable
+                way to improve the alignment of your teeth without
+                the appearance of traditional braces.
+            </p>
+
+            <p>
+                Our team creates a personalised treatment approach
+                based on your individual dental needs and smile goals.
+            </p>
+
+            <ul class="feature-list">
+
+                <li>
+                    Nearly invisible appearance
+                </li>
+
+                <li>
+                    Comfortable and removable
+                </li>
+
+                <li>
+                    Easier to maintain oral hygiene
+                </li>
+
+                <li>
+                    Personalised treatment planning
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ==============================
+     CALL TO ACTION
+============================== -->
+
+<section class="treatment-cta">
+
+    <div class="container">
+
+        <div class="treatment-cta-content">
+
+            <h2>
+                Ready to Transform Your Smile?
+            </h2>
+
+            <p>
+                Take the first step towards a healthier,
+                more confident smile. Schedule a consultation
+                with our dental team today.
+            </p>
+
+            <a href="{% url 'booking' %}" class="cta-button">
+                Book an Appointment
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    const slides = document.querySelectorAll(".hero-slide");
+
+    let currentSlide = 0;
+
+    function nextSlide(){
+
+        slides[currentSlide].classList.remove("active");
+
+        currentSlide++;
+
+        if(currentSlide >= slides.length){
+            currentSlide = 0;
+        }
+
+        slides[currentSlide].classList.add("active");
+
+    }
+
+    setInterval(nextSlide, 5000);
+
+});
+
+</script>
+
+{% endblock %}

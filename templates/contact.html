@@ -1,0 +1,899 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block nav_theme %}{% endblock %}
+{% block title %}
+Contact Us | Dr.Shadiya's Dental Clinic
+{% endblock %}
+
+
+{% block extra_css %}
+
+<style>
+
+/* ==========================================
+   CONTACT PAGE
+========================================== */
+
+:root{
+    --contact-primary:#183153;
+    --contact-dark:#10233d;
+    --contact-accent:#faf7f2;
+    --contact-text:#1f2937;
+    --contact-muted:#6b7280;
+    --contact-border:#e5e7eb;
+}
+
+
+/* ==========================================
+   CONTACT HERO
+========================================== */
+
+.contact-hero{
+    position:relative;
+    min-height:480px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+        linear-gradient(
+            rgba(15,35,61,0.88),
+            rgba(15,35,61,0.88)
+        ),
+        url("{% static 'images/contact-hero.jpg' %}");
+
+    background-size:cover;
+    background-position:center;
+    text-align:center;
+    color:white;
+}
+
+.contact-hero-content{
+    max-width:800px;
+    margin:auto;
+}
+
+.contact-tag{
+    display:inline-block;
+    margin-bottom:20px;
+
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:4px;
+    text-transform:uppercase;
+
+    color:#d9e8f5;
+}
+
+.contact-hero h1{
+    font-size:clamp(48px,6vw,76px);
+    line-height:1.1;
+    margin-bottom:25px;
+    color:white;
+}
+
+.contact-hero p{
+    max-width:650px;
+    margin:auto;
+
+    font-size:17px;
+    line-height:1.8;
+
+    color:rgba(255,255,255,0.85);
+}
+
+
+/* ==========================================
+   CONTACT INFORMATION
+========================================== */
+
+.contact-info-section{
+    padding:100px 0;
+    background:#faf7f2;
+}
+
+.contact-info-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:25px;
+    max-width:1000px;
+    margin:auto;
+}
+
+.contact-card{
+    background:white;
+    padding:40px 35px;
+
+    border:1px solid var(--contact-border);
+    border-radius:12px;
+
+    display:flex;
+    align-items:flex-start;
+    gap:25px;
+
+    transition:.3s ease;
+}
+
+.contact-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 15px 40px rgba(0,0,0,0.08);
+}
+
+.contact-icon{
+    width:55px;
+    height:55px;
+
+    flex-shrink:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:#183153;
+    color:white;
+
+    font-size:22px;
+}
+
+.contact-card-content h3{
+    font-size:21px;
+    color:var(--contact-primary);
+    margin-bottom:10px;
+}
+
+.contact-card-content p{
+    color:var(--contact-muted);
+    line-height:1.7;
+    font-size:15px;
+}
+
+.contact-card-content a{
+    color:var(--contact-muted);
+    transition:.3s;
+}
+
+.contact-card-content a:hover{
+    color:var(--contact-primary);
+}
+
+
+/* ==========================================
+   APPOINTMENT SECTION
+========================================== */
+
+.appointment-section{
+    padding:110px 0;
+    background:white;
+}
+
+.appointment-container{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:70px;
+    align-items:center;
+}
+
+
+/* Appointment Content */
+
+.appointment-content{
+    max-width:550px;
+}
+
+.section-tag{
+    display:inline-block;
+
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:3px;
+    text-transform:uppercase;
+
+    color:var(--contact-primary);
+
+    margin-bottom:20px;
+}
+
+.appointment-content h2{
+    font-size:48px;
+    line-height:1.2;
+    color:var(--contact-primary);
+    margin-bottom:25px;
+}
+
+.appointment-content p{
+    color:var(--contact-muted);
+    line-height:1.8;
+    margin-bottom:30px;
+}
+
+
+/* Appointment Image */
+
+.appointment-image{
+    width:100%;
+    height:550px;
+
+    border-radius:15px;
+    overflow:hidden;
+}
+
+.appointment-image img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+    object-position:center;
+}
+
+
+/* ==========================================
+   FORM
+========================================== */
+
+.appointment-form{
+    margin-top:35px;
+}
+
+.form-group{
+    margin-bottom:20px;
+}
+
+.form-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.form-group label{
+    display:block;
+
+    font-size:14px;
+    font-weight:600;
+
+    color:var(--contact-text);
+
+    margin-bottom:8px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+
+    width:100%;
+
+    padding:15px 16px;
+
+    border:1px solid var(--contact-border);
+    border-radius:6px;
+
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+
+    color:var(--contact-text);
+
+    background:#fff;
+
+    outline:none;
+
+    transition:.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+
+    border-color:var(--contact-primary);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(24,49,83,0.08);
+}
+
+.form-group textarea{
+    height:120px;
+    resize:none;
+}
+
+.appointment-btn-form{
+    display:inline-block;
+
+    padding:15px 32px;
+
+    background:var(--contact-primary);
+    color:white;
+
+    border:none;
+    border-radius:50px;
+
+    font-family:'Inter',sans-serif;
+
+    font-size:14px;
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.appointment-btn-form:hover{
+    background:var(--contact-dark);
+    transform:translateY(-2px);
+}
+
+
+/* ==========================================
+   MAP SECTION
+========================================== */
+
+.map-section{
+    padding:100px 0;
+    background:#faf7f2;
+}
+
+.map-heading{
+    text-align:center;
+    max-width:700px;
+    margin:0 auto 50px;
+}
+
+.map-heading .section-tag{
+    margin-bottom:15px;
+}
+
+.map-heading h2{
+    font-size:46px;
+    color:var(--contact-primary);
+    margin-bottom:20px;
+}
+
+.map-heading p{
+    color:var(--contact-muted);
+    line-height:1.7;
+}
+
+.map-container{
+    width:100%;
+    height:500px;
+
+    border-radius:15px;
+    overflow:hidden;
+
+    box-shadow:0 15px 40px rgba(0,0,0,0.08);
+}
+
+.map-container iframe{
+    width:100%;
+    height:100%;
+
+    border:0;
+}
+
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:992px){
+
+    .contact-hero{
+        min-height:450px;
+    }
+
+    .contact-hero h1{
+        font-size:52px;
+    }
+
+    .contact-info-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .appointment-container{
+        grid-template-columns:1fr;
+        gap:50px;
+    }
+
+    .appointment-content{
+        max-width:100%;
+    }
+
+    .appointment-image{
+        height:450px;
+        order:-1;
+    }
+
+    .map-container{
+        height:450px;
+    }
+
+}
+
+
+@media(max-width:768px){
+
+    .contact-hero{
+        min-height:450px;
+        padding:70px 20px;
+    }
+
+    .contact-hero h1{
+        font-size:40px;
+    }
+
+    .contact-hero p{
+        font-size:15px;
+    }
+
+    .contact-info-section{
+        padding:70px 0;
+    }
+
+    .contact-info-grid{
+        grid-template-columns:1fr;
+        gap:20px;
+    }
+
+    .contact-card{
+        padding:30px 25px;
+    }
+
+    .appointment-section{
+        padding:70px 0;
+    }
+
+    .appointment-content h2{
+        font-size:36px;
+    }
+
+    .appointment-image{
+        height:350px;
+    }
+
+    .form-row{
+        grid-template-columns:1fr;
+        gap:0;
+    }
+
+    .map-section{
+        padding:70px 0;
+    }
+
+    .map-heading h2{
+        font-size:36px;
+    }
+
+    .map-container{
+        height:400px;
+        border-radius:10px;
+    }
+
+}
+
+
+@media(max-width:480px){
+
+    .contact-hero{
+        min-height:420px;
+    }
+
+    .contact-hero h1{
+        font-size:34px;
+    }
+
+    .contact-tag{
+        font-size:11px;
+        letter-spacing:2px;
+    }
+
+    .contact-card{
+        padding:25px 20px;
+        gap:18px;
+    }
+
+    .contact-icon{
+        width:48px;
+        height:48px;
+        font-size:18px;
+    }
+
+    .contact-card-content h3{
+        font-size:19px;
+    }
+
+    .contact-card-content p{
+        font-size:14px;
+    }
+
+    .appointment-content h2{
+        font-size:32px;
+    }
+
+    .appointment-image{
+        height:280px;
+    }
+
+    .map-heading h2{
+        font-size:31px;
+    }
+
+    .map-container{
+        height:350px;
+    }
+
+}
+
+</style>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<!-- ==========================================
+     CONTACT HERO
+========================================== -->
+
+<section class="contact-hero">
+
+    <div class="container">
+
+        <div class="contact-hero-content">
+
+            <span class="contact-tag">
+                Get In Touch
+            </span>
+
+            <h1>
+                Let's Take Care
+                <br>
+                of Your Smile
+            </h1>
+
+            <p>
+                We're here to help you achieve a healthier,
+                more confident smile with personalised dental
+                care designed around your needs.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================================
+     CONTACT INFORMATION
+========================================== -->
+
+<section class="contact-info-section">
+
+    <div class="container">
+
+        <div class="contact-info-grid">
+
+
+            <!-- VISIT US -->
+
+            <div class="contact-card">
+
+                <div class="contact-icon">
+                    📍
+                </div>
+
+                <div class="contact-card-content">
+
+                    <h3>
+                        Visit Us
+                    </h3>
+
+                    <p>
+                        Haya Tower, Ground Floor,<br>
+                        Sastha Temple Road,<br>
+                        Manappattyparambu, Kaloor,<br>
+                        Ernakulam, Kerala - 682018
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- CALL US -->
+
+            <div class="contact-card">
+
+                <div class="contact-icon">
+                    📞
+                </div>
+
+                <div class="contact-card-content">
+
+                    <h3>
+                        Call Us
+                    </h3>
+
+                    <p>
+                        <a href="tel:+919895420118">
+                            +91 98954 20118
+                        </a>
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- EMAIL -->
+
+            <div class="contact-card">
+
+                <div class="contact-icon">
+                    ✉
+                </div>
+
+                <div class="contact-card-content">
+
+                    <h3>
+                        Email Us
+                    </h3>
+
+                    <p>
+                        <a href="mailto:dr.shadiya.shareef@gmail.com">
+                            dr.shadiya.shareef@gmail.com
+                        </a>
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- OPENING HOURS -->
+
+            <div class="contact-card">
+
+                <div class="contact-icon">
+                    🕐
+                </div>
+
+                <div class="contact-card-content">
+
+                    <h3>
+                        Opening Hours
+                    </h3>
+
+                    <p>
+                        Monday - Saturday<br>
+                        9:00 AM - 7:30 PM<br>
+                        Sunday on appointments.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================================
+     APPOINTMENT SECTION
+========================================== -->
+
+<section class="appointment-section">
+
+    <div class="container appointment-container">
+
+
+        <!-- FORM -->
+
+        <div class="appointment-content">
+
+            <span class="section-tag">
+                Book Your Visit
+            </span>
+
+            <h2>
+                Ready to Start
+                Your Smile Journey?
+            </h2>
+
+            <p>
+                Schedule an appointment with our team and
+                take the first step towards a healthier,
+                more confident smile.
+            </p>
+
+
+            <form class="appointment-form">
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>
+                            Your Name
+                        </label>
+
+                        <input
+                            type="text"
+                            placeholder="Enter your name"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Phone Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            placeholder="Enter your phone number"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            placeholder="Enter your email"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Select Treatment
+                        </label>
+
+                        <select>
+
+                            <option>
+                                Select Treatment
+                            </option>
+
+                            <option>
+                                Dental Implants
+                            </option>
+
+                            <option>
+                                Clear Aligners
+                            </option>
+
+                            <option>
+                                Laser Dentistry
+                            </option>
+
+                            <option>
+                                Teeth Whitening
+                            </option>
+
+                            <option>
+                                Root Canal Treatment
+                            </option>
+
+                            <option>
+                                General Dentistry
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Message
+                    </label>
+
+                    <textarea
+                        placeholder="Tell us how we can help you..."
+                    ></textarea>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="appointment-btn-form"
+                >
+                    Book Appointment
+                </button>
+
+
+            </form>
+
+        </div>
+
+
+
+        <!-- IMAGE -->
+
+        <div class="appointment-image">
+
+            <img
+                src="{% static 'images/contact.jpg' %}"
+                alt="Dr.Shadiya's Dental Clinic"
+            >
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ==========================================
+     GOOGLE MAP
+========================================== -->
+
+<section class="map-section">
+
+    <div class="container">
+
+
+        <div class="map-heading">
+
+            <span class="section-tag">
+                Find Us
+            </span>
+
+            <h2>
+                Visit Our Clinic
+            </h2>
+
+            <p>
+                Conveniently located in Kaloor, Ernakulam.
+                Find our clinic easily using the map below.
+            </p>
+
+        </div>
+
+
+        <div class="map-container">
+
+             <iframe
+                src="https://www.google.com/maps?q=Dr.Shadiya's+Dental+Clinic+and+Implant+Centre,+Haya+Tower,+Sastha+Temple+Road,+Kaloor,+Ernakulam,+Kerala+682018&output=embed"
+                allowfullscreen
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+{% endblock %}

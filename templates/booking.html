@@ -1,0 +1,985 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block nav_theme %}navbar-light{% endblock %}
+{% block title %}Book an Appointment | Dr. Shadiya's Dental Clinic{% endblock %}
+
+{% block extra_css %}
+<style>
+/* =========================================================
+   BOOKING PAGE WRAPPER
+========================================================= */
+.booking-page {
+    background: #f8f5ef;
+    min-height: 100vh;
+    color: #242424;
+    padding-bottom: 90px;
+}
+
+/* =========================================================
+   HERO BANNER
+========================================================= */
+.booking-hero {
+    position: relative;
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: 
+        linear-gradient(
+            90deg,
+            rgba(248,245,239,0.98) 0%,
+            rgba(248,245,239,0.92) 30%,
+            rgba(248,245,239,0.4) 75%
+        ),
+        url("{% static 'images/hero2.jpg' %}");
+    background-size: cover;
+    background-position: center;
+    padding: 130px 0 50px;
+}
+
+.booking-hero-content {
+    width: min(1200px, 90%);
+    margin: 0 auto;
+}
+
+.booking-small-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: #a98245;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+}
+
+.booking-small-title::after {
+    content: "";
+    width: 55px;
+    height: 1px;
+    background: #b9945c;
+}
+
+.booking-hero h1 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(38px, 5.5vw, 64px);
+    line-height: 1.05;
+    font-weight: 600;
+    max-width: 620px;
+    margin: 0 0 20px;
+    color: #183153;
+}
+
+.booking-hero p {
+    max-width: 520px;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #555;
+    margin: 0;
+}
+
+/* =========================================================
+   MAIN FORM CARD
+========================================================= */
+.booking-wrapper {
+    width: min(1120px, 92%);
+    margin: -40px auto 0;
+    position: relative;
+    z-index: 5;
+}
+
+.booking-card {
+    background: rgba(255,255,255,0.98);
+    border-radius: 24px;
+    padding: 48px;
+    box-shadow: 0 20px 60px rgba(24, 49, 83, 0.08), 0 2px 8px rgba(0,0,0,0.04);
+    border: 1px solid rgba(177,145,94,0.18);
+}
+
+/* =========================================================
+   FORM SECTIONS & TYPOGRAPHY
+========================================================= */
+.booking-section-block {
+    padding: 10px 0 35px;
+    border-bottom: 1px solid #eee8df;
+    margin-bottom: 34px;
+}
+
+.booking-section-block:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 10px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.section-number {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #c29a5b;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.section-title h2 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #183153;
+    margin: 0;
+}
+
+/* =========================================================
+   PATIENT DETAILS & INPUTS
+========================================================= */
+.patient-details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.field-group {
+    position: relative;
+}
+
+.field-group label {
+    display: block;
+    font-size: 13.5px;
+    color: #334155;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.field-group label .required {
+    color: #b33d32;
+    font-weight: 700;
+}
+
+.form-control {
+    width: 100%;
+    height: 54px;
+    box-sizing: border-box;
+    border: 1px solid #ddd4c7;
+    background: #fff;
+    border-radius: 12px;
+    padding: 0 16px;
+    font-family: inherit;
+    font-size: 14px;
+    color: #1e293b;
+    transition: all 0.25s ease;
+}
+
+.form-control:hover {
+    border-color: #c7a36a;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #b88b4b;
+    box-shadow: 0 0 0 4px rgba(184,139,75,0.12);
+}
+
+.form-control.input-error {
+    border-color: #b33d32 !important;
+    background: #fffafa;
+}
+
+.form-hint {
+    display: block;
+    font-size: 11.5px;
+    color: #64748b;
+    margin-top: 5px;
+}
+
+/* =========================================================
+   CONCERN OPTIONS
+========================================================= */
+.concern-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.concern-option {
+    position: relative;
+    cursor: pointer;
+}
+
+.concern-option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.concern-card {
+    min-height: 110px;
+    border: 1px solid #e1d9ce;
+    border-radius: 14px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 15px;
+    transition: all 0.25s ease;
+}
+
+.concern-card:hover {
+    transform: translateY(-2px);
+    border-color: #c49b5d;
+    box-shadow: 0 8px 20px rgba(83,61,31,0.07);
+}
+
+.concern-icon {
+    font-size: 25px;
+    margin-bottom: 8px;
+    color: #9d763d;
+}
+
+.concern-card span {
+    font-size: 14px;
+    line-height: 1.35;
+    color: #333;
+    font-weight: 500;
+}
+
+.concern-option input:checked + .concern-card {
+    border-color: #b88b4b;
+    background: linear-gradient(145deg, #fffdf9, #f8f0e4);
+    box-shadow: 0 8px 22px rgba(147,108,55,0.12);
+    transform: translateY(-2px);
+}
+
+.concern-option input:checked + .concern-card::after {
+    content: "✓";
+    position: absolute;
+    top: 9px;
+    right: 10px;
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    background: #b88b4b;
+    color: white;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.other-box {
+    display: none;
+    margin-top: 16px;
+}
+
+.other-box.active {
+    display: block;
+    animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================================
+   DATE & TIME SLOTS
+========================================================= */
+.date-wrapper {
+    max-width: 360px;
+}
+
+.date-wrapper label {
+    display: block;
+    font-size: 13.5px;
+    color: #334155;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.date-input {
+    width: 100%;
+    height: 54px;
+    padding: 0 16px;
+    border-radius: 12px;
+    border: 1px solid #ddd4c7;
+    background: #fff;
+    color: #333;
+    font-family: inherit;
+    font-size: 14px;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.date-input:focus {
+    outline: none;
+    border-color: #b88b4b;
+    box-shadow: 0 0 0 4px rgba(184,139,75,0.12);
+}
+
+.time-heading {
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.time-heading h3 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 4px;
+    color: #183153;
+}
+
+.time-heading p {
+    margin: 0;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.time-slots {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 11px;
+}
+
+.time-slot {
+    position: relative;
+}
+
+.time-slot input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.time-slot label {
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ded6ca;
+    border-radius: 10px;
+    background: #fff;
+    color: #444;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.22s ease;
+}
+
+.time-slot label:hover {
+    border-color: #b88b4b;
+    background: #fcf9f4;
+}
+
+.time-slot input:checked + label {
+    background: #c19a5d;
+    border-color: #c19a5d;
+    color: #fff;
+    box-shadow: 0 5px 14px rgba(174,130,63,0.20);
+}
+
+.time-slot.booked label {
+    background: #f2f0ed;
+    color: #aaa;
+    border-color: #e5e1db;
+    cursor: not-allowed;
+    text-decoration: line-through;
+}
+
+.no-slots {
+    display: none;
+    margin-top: 16px;
+    padding: 18px;
+    border-radius: 12px;
+    background: #faf7f1;
+    border: 1px solid #e8dfd1;
+    color: #876d47;
+    font-size: 14px;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.timing-notice {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 22px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    background: #faf7f1;
+    border: 1px solid #eee2d0;
+    color: #795f39;
+    font-size: 13px;
+}
+
+.timing-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1px solid #c29a5b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+/* =========================================================
+   VALIDATION ALERTS & MESSAGES
+========================================================= */
+.error-message {
+    color: #b33d32;
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 6px;
+    display: block;
+}
+
+.form-error {
+    background: #fff4f2;
+    border: 1px solid #f0c8c2;
+    color: #a43b32;
+    padding: 14px 18px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    font-size: 14px;
+}
+
+/* =========================================================
+   SUBMIT BUTTON & TRUST
+========================================================= */
+.submit-area {
+    margin-top: 35px;
+}
+
+.submit-btn {
+    width: 100%;
+    height: 58px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #183153, #10233d);
+    color: #fff;
+    font-family: inherit;
+    font-size: 14.5px;
+    font-weight: 700;
+    letter-spacing: 1.3px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(24, 49, 83, 0.18);
+}
+
+.submit-btn:hover {
+    background: linear-gradient(135deg, #b58a4d, #9e733a);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 25px rgba(160,117,56,0.25);
+}
+
+.security-note {
+    text-align: center;
+    margin-top: 15px;
+    color: #64748b;
+    font-size: 12.5px;
+}
+
+/* =========================================================
+   FEATURE ICONS BAR
+========================================================= */
+.booking-features {
+    width: min(1000px, 90%);
+    margin: 50px auto 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+}
+
+.booking-feature {
+    text-align: center;
+    padding: 15px 25px;
+    border-right: 1px solid #ded8ce;
+}
+
+.booking-feature:last-child {
+    border-right: none;
+}
+
+.feature-icon {
+    font-size: 26px;
+    color: #b58a4d;
+    margin-bottom: 8px;
+}
+
+.booking-feature h4 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 16px;
+    margin: 0 0 5px;
+    font-weight: 600;
+    color: #183153;
+}
+
+.booking-feature p {
+    margin: 0;
+    color: #64748b;
+    font-size: 12.5px;
+    line-height: 1.5;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+@media (max-width: 992px) {
+    .booking-card {
+        padding: 35px 25px;
+    }
+    .patient-details {
+        grid-template-columns: 1fr 1fr;
+    }
+    .patient-details .field-group:last-child {
+        grid-column: 1 / -1;
+    }
+    .time-slots {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    .booking-features {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    .booking-feature {
+        border-right: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .booking-hero {
+        min-height: 350px;
+        padding: 110px 0 40px;
+    }
+    .booking-hero h1 {
+        font-size: 38px;
+    }
+    .booking-wrapper {
+        margin-top: -20px;
+    }
+    .booking-card {
+        padding: 24px 18px;
+        border-radius: 18px;
+    }
+    .patient-details {
+        grid-template-columns: 1fr;
+    }
+    .patient-details .field-group:last-child {
+        grid-column: auto;
+    }
+    .concern-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+    .time-slots {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+    .booking-features {
+        grid-template-columns: 1fr;
+        margin-top: 35px;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="booking-page">
+
+    <!-- HERO BANNER -->
+    <section class="booking-hero">
+        <div class="booking-hero-content">
+            <div class="booking-small-title">Appointment</div>
+            <h1>Book Your<br>Appointment</h1>
+            <p>
+                We're here to help you smile with confidence. Fill in your details below and we will send a confirmation directly to your email.
+            </p>
+        </div>
+    </section>
+
+    <!-- BOOKING FORM WRAPPER -->
+    <div class="booking-wrapper">
+        <div class="booking-card">
+
+            <form method="POST" id="appointmentForm" novalidate>
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                    <div class="form-error">
+                        {% for error in form.non_field_errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <!-- SECTION 1: PATIENT DETAILS -->
+                <div class="booking-section-block">
+                    <div class="section-title">
+                        <div class="section-number">1</div>
+                        <h2>Your Details</h2>
+                    </div>
+
+                    <div class="patient-details">
+                        <!-- FULL NAME -->
+                        <div class="field-group">
+                            <label for="id_name">
+                                Full Name <span class="required">*</span>
+                            </label>
+                            {{ form.name }}
+                            <div class="error-message" id="nameError">
+                                {% for error in form.name.errors %}{{ error }}{% endfor %}
+                            </div>
+                        </div>
+
+                        <!-- PHONE -->
+                        <div class="field-group">
+                            <label for="id_phone">
+                                WhatsApp / Phone <span class="required">*</span>
+                            </label>
+                            {{ form.phone }}
+                            <div class="error-message" id="phoneError">
+                                {% for error in form.phone.errors %}{{ error }}{% endfor %}
+                            </div>
+                        </div>
+
+                        <!-- EMAIL (STRICTLY REQUIRED FOR CONFIRMATIONS) -->
+                        <div class="field-group">
+                            <label for="id_email">
+                                Email Address <span class="required">*</span>
+                            </label>
+                            {{ form.email }}
+                            
+                            <div class="error-message" id="emailError">
+                                {% for error in form.email.errors %}{{ error }}{% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECTION 2: CONCERN -->
+                <div class="booking-section-block">
+                    <div class="section-title">
+                        <div class="section-number">2</div>
+                        <h2>How can we help you?</h2>
+                    </div>
+
+                    <div class="concern-grid">
+                        {% for radio in form.concern %}
+                            <label class="concern-option">
+                                {{ radio.tag }}
+                                <div class="concern-card">
+                                    <div class="concern-icon">
+                                        {% if radio.choice_value == "aligners" %}♡
+                                        {% elif radio.choice_value == "whitening" %}✦
+                                        {% elif radio.choice_value == "implants" %}◇
+                                        {% elif radio.choice_value == "cleaning" %}♧
+                                        {% elif radio.choice_value == "general" %}♡
+                                        {% else %}•••{% endif %}
+                                    </div>
+                                    <span>{{ radio.choice_label }}</span>
+                                </div>
+                            </label>
+                        {% endfor %}
+                    </div>
+
+                    <div class="other-box" id="otherBox">
+                        {{ form.other_concern }}
+                        {% for error in form.other_concern.errors %}
+                            <div class="error-message">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- SECTION 3: DATE & TIME -->
+                <div class="booking-section-block">
+                    <div class="section-title">
+                        <div class="section-number">3</div>
+                        <h2>Choose Date & Time</h2>
+                    </div>
+
+                    <!-- DATE INPUT -->
+                    <div class="date-wrapper">
+                        <label for="id_appointment_date">
+                            Appointment Date <span class="required">*</span>
+                        </label>
+                        {{ form.appointment_date }}
+                        <div class="error-message" id="dateError">
+                            {% for error in form.appointment_date.errors %}{{ error }}{% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- TIME HEADING & SLOTS -->
+                    <div class="time-heading">
+                        <h3>Choose Time</h3>
+                        <p>Available time slots for the selected date</p>
+                    </div>
+
+                    <div class="time-slots" id="timeSlots"></div>
+                    <div class="no-slots" id="noSlots"></div>
+
+                    <!-- HIDDEN DJANGO TIME FIELD -->
+                    <div style="display:none;">
+                        {{ form.appointment_time }}
+                    </div>
+                    <div class="error-message" id="timeError">
+                        {% for error in form.appointment_time.errors %}{{ error }}{% endfor %}
+                    </div>
+
+                    <div class="timing-notice">
+                        <div class="timing-icon">i</div>
+                        <div>
+                            Clinic timings: <strong>9:30 AM – 7:30 PM</strong><br>
+                            <small>Closed on Sundays</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUBMIT BUTTON -->
+                <div class="submit-area">
+                    <button type="submit" class="submit-btn">BOOK APPOINTMENT</button>
+                    <div class="security-note">
+                        🔒 Your information is secure and confidential.
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- FEATURES STRIP -->
+    <div class="booking-features">
+        <div class="booking-feature">
+            <div class="feature-icon">♡</div>
+            <h4>Expert Care</h4>
+            <p>Experienced & compassionate dental specialists</p>
+        </div>
+        <div class="booking-feature">
+            <div class="feature-icon">✦</div>
+            <h4>Advanced Tech</h4>
+            <p>State-of-the-art diagnostic & clinical systems</p>
+        </div>
+        <div class="booking-feature">
+            <div class="feature-icon">♡</div>
+            <h4>Patient First</h4>
+            <p>Gentle, transparent & personalized approach</p>
+        </div>
+        <div class="booking-feature">
+            <div class="feature-icon">✧</div>
+            <h4>Instant Booking</h4>
+            <p>Direct confirmation & scheduled calendar slots</p>
+        </div>
+    </div>
+</div>
+
+<!-- JAVASCRIPT VALIDATION & SLOT CONTROLLER -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const concernInputs = document.querySelectorAll('input[name="concern"]');
+    const otherBox = document.getElementById("otherBox");
+
+    const nameInput = document.getElementById("id_name");
+    const phoneInput = document.getElementById("id_phone");
+    const emailInput = document.getElementById("id_email");
+    const dateInput = document.getElementById("id_appointment_date");
+    const djangoTimeSelect = document.getElementById("id_appointment_time");
+
+    const timeSlots = document.getElementById("timeSlots");
+    const noSlots = document.getElementById("noSlots");
+    const appointmentForm = document.getElementById("appointmentForm");
+
+    // Add form-control class to Django form inputs dynamically if missing
+    [nameInput, phoneInput, emailInput, dateInput].forEach(input => {
+        if (input && !input.classList.contains("form-control")) {
+            input.classList.add("form-control");
+        }
+    });
+
+    // Toggle Other Concern text field
+    concernInputs.forEach(input => {
+        input.addEventListener("change", function () {
+            if (this.value === "other") {
+                otherBox.classList.add("active");
+            } else {
+                otherBox.classList.remove("active");
+            }
+        });
+    });
+
+    // Restrict Past Dates
+    const today = new Date();
+    const todayString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+    if (dateInput) {
+        dateInput.min = todayString;
+    }
+
+    // Dynamic Time Slot Retrieval
+    if (dateInput) {
+        dateInput.addEventListener("change", function () {
+            const selectedDate = this.value;
+            timeSlots.innerHTML = "";
+            noSlots.style.display = "none";
+            if (djangoTimeSelect) djangoTimeSelect.value = "";
+
+            if (!selectedDate) return;
+
+            const selected = new Date(selectedDate + "T00:00:00");
+            if (selected.getDay() === 0) {
+                noSlots.style.display = "block";
+                noSlots.innerHTML = "Sunday is a holiday.<br>Please select another date.";
+                return;
+            }
+
+            fetch("{% url 'available_times' %}?date=" + encodeURIComponent(selectedDate))
+                .then(response => {
+                    if (!response.ok) throw new Error("Server error: " + response.status);
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.is_holiday) {
+                        noSlots.style.display = "block";
+                        noSlots.innerHTML = "Sunday is a holiday.<br>Please select another date.";
+                        return;
+                    }
+
+                    const availableTimes = data.available_times || [];
+                    const bookedTimes = data.booked_times || [];
+
+                    availableTimes.forEach(time => {
+                        const wrapper = document.createElement("div");
+                        wrapper.className = "time-slot";
+
+                        const input = document.createElement("input");
+                        input.type = "radio";
+                        input.name = "time_visual";
+                        input.value = time.value;
+                        input.id = "time_" + time.value.replace(":", "");
+
+                        const label = document.createElement("label");
+                        label.htmlFor = input.id;
+                        label.textContent = time.label;
+
+                        input.addEventListener("change", function () {
+                            if (djangoTimeSelect) djangoTimeSelect.value = this.value;
+                            document.getElementById("timeError").textContent = "";
+                        });
+
+                        wrapper.appendChild(input);
+                        wrapper.appendChild(label);
+                        timeSlots.appendChild(wrapper);
+                    });
+
+                    bookedTimes.forEach(bookedTime => {
+                        const wrapper = document.createElement("div");
+                        wrapper.className = "time-slot booked";
+
+                        const label = document.createElement("label");
+                        label.textContent = getTimeLabel(bookedTime) + " • Booked";
+
+                        wrapper.appendChild(label);
+                        timeSlots.appendChild(wrapper);
+                    });
+
+                    if (availableTimes.length === 0 && bookedTimes.length === 0) {
+                        noSlots.style.display = "block";
+                        noSlots.textContent = "No appointment slots are available for this date.";
+                    }
+                })
+                .catch(error => {
+                    console.error("Slot fetch error:", error);
+                    timeSlots.innerHTML = "";
+                    noSlots.style.display = "block";
+                    noSlots.textContent = "Unable to load slots. Please check your connection.";
+                });
+        });
+    }
+
+    function getTimeLabel(time) {
+        const parts = time.split(":");
+        let hour = parseInt(parts[0], 10);
+        const minute = parts[1];
+        const suffix = hour >= 12 ? "PM" : "AM";
+        if (hour > 12) hour -= 12;
+        if (hour === 0) hour = 12;
+        return `${String(hour).padStart(2, "0")}:${minute} ${suffix}`;
+    }
+
+    // Front-end Form Validation (Email & Fields)
+    appointmentForm.addEventListener("submit", function (event) {
+        let isValid = true;
+
+        // Clear previous error styles
+        document.querySelectorAll(".error-message").forEach(el => el.textContent = "");
+        document.querySelectorAll(".form-control").forEach(el => el.classList.remove("input-error"));
+
+        // Validate Full Name
+        if (nameInput && !nameInput.value.trim()) {
+            document.getElementById("nameError").textContent = "Please enter your full name.";
+            nameInput.classList.add("input-error");
+            isValid = false;
+        }
+
+        // Validate Phone
+        if (phoneInput && !phoneInput.value.trim()) {
+            document.getElementById("phoneError").textContent = "Please enter a valid contact number.";
+            phoneInput.classList.add("input-error");
+            isValid = false;
+        }
+
+        // Validate Required Email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (emailInput) {
+            const emailVal = emailInput.value.trim();
+            if (!emailVal) {
+                document.getElementById("emailError").textContent = "Email address is required for sending confirmation.";
+                emailInput.classList.add("input-error");
+                isValid = false;
+            } else if (!emailRegex.test(emailVal)) {
+                document.getElementById("emailError").textContent = "Please provide a valid email format (e.g. name@domain.com).";
+                emailInput.classList.add("input-error");
+                isValid = false;
+            }
+        }
+
+        // Validate Date
+        if (dateInput && !dateInput.value) {
+            document.getElementById("dateError").textContent = "Please select an appointment date.";
+            dateInput.classList.add("input-error");
+            isValid = false;
+        }
+
+        // Validate Time Slot
+        if (djangoTimeSelect && !djangoTimeSelect.value) {
+            document.getElementById("timeError").textContent = "Please select an available time slot.";
+            isValid = false;
+        }
+
+        if (!isValid) {
+            event.preventDefault();
+            // Scroll smoothly to the first errored input
+            const firstError = document.querySelector(".input-error");
+            if (firstError) {
+                firstError.scrollIntoView({ behavior: "smooth", block: "center" });
+                firstError.focus();
+            }
+            return false;
+        }
+    });
+});
+</script>
+{% endblock %}

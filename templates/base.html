@@ -1,0 +1,1526 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dental Clinic{% endblock %}</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+      rel="stylesheet">
+
+<style>
+
+    /* =========================================================
+       ROOT VARIABLES
+    ========================================================= */
+
+    :root {
+        --primary: #183153;
+        --primary-dark: #10233d;
+        --secondary: #4a6fa5;
+        --accent: #faf7f2;
+        --text: #1f2937;
+        --muted: #6b7280;
+        --border: #e5e7eb;
+        --white: #ffffff;
+
+        --shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+    }
+
+
+    /* =========================================================
+       RESET
+    ========================================================= */
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        color: var(--text);
+        background: var(--white);
+        overflow-x: hidden;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    img {
+        max-width: 100%;
+        display: block;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+        font-family: inherit;
+    }
+
+    .container {
+        width: 92%;
+        max-width: 1350px;
+        margin: 0 auto;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+        font-family: 'Playfair Display', serif;
+        font-weight: 600;
+    }
+
+    section {
+        padding: 100px 0;
+    }
+
+
+    /* =========================================================
+       NAVBAR (STICKY / FIXED)
+    ========================================================= */
+
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 9999;
+
+        padding: 22px 0;
+
+        background: transparent;
+
+        transition:
+            background 0.3s ease,
+            padding 0.3s ease,
+            box-shadow 0.3s ease;
+    }
+
+    .nav-wrapper {
+        width: 92%;
+        max-width: 1500px;
+        margin: 0 auto;
+
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+
+        align-items: center;
+
+        gap: 30px;
+    }
+
+
+    /* =========================================================
+       LOGO
+    ========================================================= */
+
+    .logo {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+
+        gap: 14px !important;
+
+        width: fit-content;
+
+        color: #ffffff !important;
+
+        text-decoration: none !important;
+
+        white-space: nowrap !important;
+
+        flex-shrink: 0;
+    }
+
+    .logo img {
+        width: 58px !important;
+        height: 58px !important;
+
+        object-fit: contain !important;
+
+        filter: brightness(0) invert(1) !important;
+
+        flex-shrink: 0 !important;
+
+        transition: filter 0.3s ease;
+    }
+
+    .logo span {
+        font-family: 'Inter', sans-serif !important;
+
+        font-size: 27px !important;
+        font-weight: 700 !important;
+
+        letter-spacing: -0.7px !important;
+
+        line-height: 1 !important;
+
+        color: #ffffff !important;
+
+        white-space: nowrap !important;
+
+        transition: color 0.3s ease;
+    }
+
+
+    /* =========================================================
+       CENTER NAVIGATION PILL
+    ========================================================= */
+
+    .nav-pill-container {
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        width: max-content;
+
+        padding: 10px 28px;
+
+        background: rgba(255, 255, 255, 0.13);
+
+        border: 1px solid rgba(255, 255, 255, 0.25);
+
+        border-radius: 999px;
+
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+
+        box-shadow:
+            0 8px 35px rgba(0, 0, 0, 0.12),
+            inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
+        transition: all 0.3s ease;
+    }
+
+    .nav-links {
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 30px;
+
+        margin: 0;
+        padding: 0;
+    }
+
+    .nav-links li {
+        display: flex;
+        align-items: center;
+    }
+
+    .nav-links a {
+        position: relative;
+
+        display: inline-block;
+
+        font-family: 'Inter', sans-serif;
+
+        font-size: 16px;
+        font-weight: 500;
+
+        line-height: 1.2;
+
+        color: rgba(255, 255, 255, 0.92);
+
+        white-space: nowrap;
+
+        transition:
+            color 0.3s ease,
+            transform 0.3s ease;
+    }
+
+    .nav-links a::after {
+        content: "";
+
+        position: absolute;
+
+        left: 50%;
+        bottom: -8px;
+
+        width: 0;
+        height: 2px;
+
+        border-radius: 20px;
+
+        background: #ffffff;
+
+        transform: translateX(-50%);
+
+        transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover {
+        color: #ffffff;
+
+        transform: translateY(-1px);
+    }
+
+    .nav-links a:hover::after {
+        width: 18px;
+    }
+
+
+    /* =========================================================
+       APPOINTMENT BUTTON
+    ========================================================= */
+
+    .appointment-wrapper {
+        display: flex;
+
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .appointment-btn {
+        display: inline-flex !important;
+
+        flex-direction: row !important;
+
+        align-items: center !important;
+        justify-content: center !important;
+
+        gap: 14px !important;
+
+        width: fit-content !important;
+
+        min-width: 307px;
+
+        height: 61px;
+
+        padding: 7px 8px 7px 25px !important;
+
+        background: #ffffff !important;
+
+        color: #172033 !important;
+
+        border-radius: 999px !important;
+
+        font-family: 'Inter', sans-serif !important;
+
+        font-size: 14px !important;
+        font-weight: 700 !important;
+
+        letter-spacing: 0.2px !important;
+
+        line-height: 1 !important;
+
+        text-decoration: none !important;
+
+        white-space: nowrap !important;
+
+        box-shadow:
+            0 8px 30px rgba(0, 0, 0, 0.18) !important;
+
+        transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease !important;
+    }
+
+    .appointment-btn:hover {
+        transform: translateY(-2px) !important;
+
+        box-shadow:
+            0 12px 35px rgba(0, 0, 0, 0.25) !important;
+    }
+
+    .appointment-btn > span:first-child {
+        display: inline-block !important;
+
+        color: #172033 !important;
+
+        font-size: 14px !important;
+        font-weight: 700 !important;
+
+        white-space: nowrap !important;
+    }
+
+    .btn-arrow-circle {
+        width: 46px !important;
+        height: 46px !important;
+
+        min-width: 46px !important;
+        min-height: 46px !important;
+
+        max-width: 46px !important;
+        max-height: 46px !important;
+
+        display: flex !important;
+
+        align-items: center !important;
+        justify-content: center !important;
+
+        background: #f1f3f5 !important;
+
+        border-radius: 50% !important;
+
+        color: #172033 !important;
+
+        font-size: 18px !important;
+        font-weight: 400 !important;
+
+        line-height: 1 !important;
+
+        padding: 0 !important;
+        margin: 0 !important;
+
+        flex-shrink: 0 !important;
+
+        transition:
+            transform 0.3s ease,
+            background 0.3s ease !important;
+    }
+
+    .appointment-btn:hover .btn-arrow-circle {
+        transform: translateX(2px);
+
+        background: #e8ebee !important;
+    }
+
+
+    /* =========================================================
+       MOBILE MENU BUTTON
+    ========================================================= */
+
+    .menu-btn {
+        display: none;
+
+        align-items: center;
+        justify-content: center;
+
+        justify-self: end;
+
+        width: 46px;
+        height: 46px;
+
+        padding: 0;
+
+        border: 1px solid rgba(255, 255, 255, 0.28);
+
+        border-radius: 50%;
+
+        background: rgba(255, 255, 255, 0.12);
+
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+
+        color: #ffffff;
+
+        font-size: 22px;
+
+        line-height: 1;
+
+        cursor: pointer;
+
+        position: relative;
+
+        z-index: 10001;
+
+        transition:
+            background 0.3s ease,
+            color 0.3s ease,
+            border 0.3s ease,
+            transform 0.3s ease;
+    }
+
+    .menu-btn:hover {
+        transform: scale(1.04);
+    }
+
+    .menu-btn .hamburger-icon {
+        display: block;
+        transition: transform 0.3s ease;
+    }
+
+    .menu-btn.active .hamburger-icon {
+        transform: rotate(90deg);
+    }
+
+
+    /* =========================================================
+       MOBILE MENU
+    ========================================================= */
+
+    .mobile-menu {
+        display: none;
+
+        position: absolute;
+
+        top: calc(100% + 10px);
+
+        left: 4%;
+
+        width: 92%;
+
+        padding: 18px;
+
+        background: rgba(255, 255, 255, 0.97);
+
+        border: 1px solid rgba(24, 49, 83, 0.10);
+
+        border-radius: 24px;
+
+        box-shadow:
+            0 20px 60px rgba(15, 23, 42, 0.18);
+
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+
+        opacity: 0;
+
+        visibility: hidden;
+
+        transform:
+            translateY(-12px)
+            scale(0.98);
+
+        transform-origin: top center;
+
+        transition:
+            opacity 0.3s ease,
+            visibility 0.3s ease,
+            transform 0.3s ease;
+    }
+
+    .mobile-menu.active {
+        opacity: 1;
+
+        visibility: visible;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+
+    .mobile-nav-links {
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 4px;
+    }
+
+    .mobile-nav-links li {
+        width: 100%;
+    }
+
+    .mobile-nav-links a {
+        display: flex;
+
+        align-items: center;
+        justify-content: space-between;
+
+        width: 100%;
+
+        padding: 15px 16px;
+
+        border-radius: 14px;
+
+        color: var(--primary);
+
+        font-size: 15px;
+
+        font-weight: 600;
+
+        transition:
+            background 0.25s ease,
+            color 0.25s ease,
+            padding-left 0.25s ease;
+    }
+
+    .mobile-nav-links a::after {
+        content: "→";
+
+        font-size: 17px;
+
+        opacity: 0.45;
+
+        transition:
+            transform 0.25s ease,
+            opacity 0.25s ease;
+    }
+
+    .mobile-nav-links a:hover {
+        background: #f4f6f8;
+
+        color: var(--secondary);
+
+        padding-left: 20px;
+    }
+
+    .mobile-nav-links a:hover::after {
+        opacity: 1;
+
+        transform: translateX(3px);
+    }
+
+
+    /* MOBILE APPOINTMENT */
+
+    .mobile-appointment {
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        width: 100%;
+
+        min-height: 54px;
+
+        margin-top: 12px;
+
+        padding: 14px 20px;
+
+        border-radius: 999px;
+
+        background: var(--primary);
+
+        color: #ffffff;
+
+        font-size: 14px;
+
+        font-weight: 700;
+
+        letter-spacing: 0.2px;
+
+        box-shadow:
+            0 10px 25px rgba(24, 49, 83, 0.20);
+
+        transition:
+            transform 0.25s ease,
+            background 0.25s ease;
+    }
+
+    .mobile-appointment:hover {
+        transform: translateY(-2px);
+
+        background: var(--primary-dark);
+    }
+
+
+    /* =========================================================
+       LIGHT THEME
+    ========================================================= */
+
+    .navbar.navbar-light .logo img {
+        filter: none !important;
+    }
+
+    .navbar.navbar-light .logo span {
+        color: var(--primary) !important;
+    }
+
+    .navbar.navbar-light .nav-pill-container {
+        background: rgba(255, 255, 255, 0.65);
+
+        border: 1px solid rgba(24, 49, 83, 0.12);
+
+        box-shadow:
+            0 8px 30px rgba(24, 49, 83, 0.08);
+    }
+
+    .navbar.navbar-light .nav-links a {
+        color: #183153;
+
+        font-weight: 600;
+    }
+
+    .navbar.navbar-light .nav-links a:hover {
+        color: #4a6fa5;
+    }
+
+    .navbar.navbar-light .nav-links a::after {
+        background: #183153;
+    }
+
+    .navbar.navbar-light .appointment-btn {
+        background: var(--primary) !important;
+
+        color: #ffffff !important;
+
+        box-shadow:
+            0 8px 25px rgba(24, 49, 83, 0.22) !important;
+    }
+
+    .navbar.navbar-light .appointment-btn > span:first-child {
+        color: #ffffff !important;
+    }
+
+    .navbar.navbar-light .btn-arrow-circle {
+        background: rgba(255, 255, 255, 0.18) !important;
+
+        color: #ffffff !important;
+    }
+
+    .navbar.navbar-light
+    .appointment-btn:hover
+    .btn-arrow-circle {
+        background: rgba(255, 255, 255, 0.28) !important;
+    }
+
+    .navbar.navbar-light .menu-btn {
+        color: var(--primary);
+
+        border-color: rgba(24, 49, 83, 0.20);
+
+        background: rgba(255, 255, 255, 0.75);
+    }
+
+
+    /* =========================================================
+       MAIN CONTENT
+    ========================================================= */
+
+    main {
+        min-height: 70vh;
+    }
+
+
+    /* =========================================================
+       FOOTER
+    ========================================================= */
+
+    footer {
+        background: #0f172a;
+
+        color: white;
+
+        padding-top: 80px;
+    }
+
+    .footer-grid {
+        display: grid;
+
+        grid-template-columns:
+            2fr
+            1fr
+            1fr
+            1fr;
+
+        gap: 50px;
+    }
+
+    .footer-logo {
+        font-size: 28px;
+
+        font-family: 'Playfair Display', serif;
+
+        margin-bottom: 20px;
+    }
+
+    .footer-about {
+        color: #cbd5e1;
+
+        line-height: 1.8;
+
+        max-width: 450px;
+    }
+
+    .footer-title {
+        margin-bottom: 20px;
+
+        font-size: 20px;
+    }
+
+    .footer-links {
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+    .footer-links a {
+        color: #cbd5e1;
+
+        line-height: 1.6;
+
+        transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+        color: #ffffff;
+    }
+
+    .footer-bottom {
+        border-top:
+            1px solid rgba(255, 255, 255, 0.1);
+
+        margin-top: 60px;
+
+        padding: 25px 0;
+
+        text-align: center;
+
+        color: #94a3b8;
+
+        font-size: 14px;
+    }
+
+
+    /* =========================================================
+       TABLET
+    ========================================================= */
+
+    @media (max-width: 1250px) {
+
+        .nav-wrapper {
+            width: 94%;
+
+            gap: 20px;
+        }
+
+        .logo span {
+            font-size: 24px !important;
+        }
+
+        .logo img {
+            width: 52px !important;
+            height: 52px !important;
+        }
+
+        .nav-pill-container {
+            padding: 9px 20px;
+        }
+
+        .nav-links {
+            gap: 21px;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+        }
+
+        .appointment-btn {
+            min-width: 270px;
+
+            height: 57px;
+
+            padding-left: 20px !important;
+        }
+
+        .appointment-btn > span:first-child {
+            font-size: 12px !important;
+        }
+
+        .btn-arrow-circle {
+            width: 42px !important;
+            height: 42px !important;
+
+            min-width: 42px !important;
+            min-height: 42px !important;
+        }
+    }
+
+
+    /* =========================================================
+       MOBILE / TABLET NAVBAR
+    ========================================================= */
+
+    @media (max-width: 1050px) {
+
+        .navbar {
+            padding: 18px 0;
+        }
+
+        .nav-wrapper {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            width: 92%;
+        }
+
+        .nav-pill-container,
+        .appointment-wrapper {
+            display: none;
+        }
+
+        .menu-btn {
+            display: flex;
+        }
+
+        .mobile-menu {
+            display: block;
+        }
+    }
+
+
+    /* =========================================================
+       MOBILE
+    ========================================================= */
+
+    @media (max-width: 768px) {
+
+        .navbar {
+            padding: 15px 0;
+        }
+
+        .nav-wrapper {
+            width: 90%;
+        }
+
+        .logo {
+            gap: 10px !important;
+        }
+
+        .logo img {
+            width: 45px !important;
+            height: 45px !important;
+        }
+
+        .logo span {
+            font-size: 20px !important;
+
+            letter-spacing: -0.4px !important;
+        }
+
+        .menu-btn {
+            width: 44px;
+            height: 44px;
+
+            font-size: 21px;
+        }
+
+        .mobile-menu {
+            left: 5%;
+
+            width: 90%;
+
+            border-radius: 20px;
+
+            padding: 15px;
+        }
+
+        .mobile-nav-links a {
+            padding: 14px;
+        }
+
+        section {
+            padding: 70px 0;
+        }
+
+        .footer-grid {
+            grid-template-columns: 1fr;
+
+            gap: 35px;
+        }
+
+        footer {
+            padding-top: 60px;
+        }
+
+        .footer-bottom {
+            margin-top: 40px;
+        }
+    }
+
+
+    /* =========================================================
+       SMALL PHONES
+    ========================================================= */
+
+    @media (max-width: 430px) {
+
+        .nav-wrapper {
+            width: 91%;
+        }
+
+        .logo {
+            gap: 8px !important;
+        }
+
+        .logo img {
+            width: 40px !important;
+            height: 40px !important;
+        }
+
+        .logo span {
+            font-size: 18px !important;
+        }
+
+        .menu-btn {
+            width: 41px;
+            height: 41px;
+
+            font-size: 20px;
+        }
+
+        .mobile-menu {
+            left: 4.5%;
+
+            width: 91%;
+        }
+    }
+
+
+    /* =========================================================
+       VERY SMALL PHONES
+    ========================================================= */
+
+    @media (max-width: 350px) {
+
+        .logo span {
+            font-size: 16px !important;
+        }
+
+        .logo img {
+            width: 37px !important;
+            height: 37px !important;
+        }
+
+        .menu-btn {
+            width: 39px;
+            height: 39px;
+        }
+    }
+
+</style>
+
+{% block extra_css %}{% endblock %}
+
+
+</head>
+
+<body>
+
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+<nav class="navbar {% block nav_theme %}{% endblock %}">
+
+    <div class="nav-wrapper">
+
+
+        <!-- LOGO -->
+
+        <a href="/" class="logo">
+
+            <img
+                src="{% static 'images/blacklogo.png' %}"
+                alt="Dr. Shadiya's Dental Clinic Logo"
+            >
+
+            <span>Dr.Shadiya's</span>
+
+        </a>
+
+
+        <!-- DESKTOP NAVIGATION -->
+
+        <div class="nav-pill-container">
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="/">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'treatments' %}">
+                        Services
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'about' %}">
+                        About Us
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'testimonial' %}">
+                        Testimonials
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'contact' %}">
+                        Contact
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <!-- DESKTOP APPOINTMENT -->
+
+        <div class="appointment-wrapper">
+
+            <a
+                href="{% url 'booking' %}"
+                class="appointment-btn"
+            >
+
+                <span>
+                    BOOK AN APPOINTMENT
+                </span>
+
+                <span class="btn-arrow-circle">
+                    →
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <!-- MOBILE MENU BUTTON -->
+
+        <button
+            type="button"
+            class="menu-btn"
+            id="mobileMenuButton"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+            aria-controls="mobileMenu"
+        >
+
+            <span class="hamburger-icon">
+                ☰
+            </span>
+
+        </button>
+
+
+    </div>
+
+
+    <!-- =====================================================
+         MOBILE MENU
+    ====================================================== -->
+
+    <div
+        class="mobile-menu"
+        id="mobileMenu"
+    >
+
+        <ul class="mobile-nav-links">
+
+            <li>
+                <a href="/">
+                    <span>Home</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'treatments' %}">
+                    <span>Services</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'about' %}">
+                    <span>About Us</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'testimonial' %}">
+                    <span>Testimonials</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{% url 'contact' %}">
+                    <span>Contact</span>
+                </a>
+            </li>
+
+        </ul>
+
+
+        <!-- MOBILE APPOINTMENT BUTTON -->
+
+        <a
+            href="{% url 'booking' %}"
+            class="mobile-appointment"
+        >
+            BOOK AN APPOINTMENT
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+
+<main>
+
+    {% block content %}
+    {% endblock %}
+
+</main>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+    <div class="container">
+
+        <div class="footer-grid">
+
+
+            <!-- ABOUT -->
+
+            <div>
+
+                <div class="footer-logo">
+                    Dr.Shadiya's Dental Clinic
+                </div>
+
+                <p class="footer-about">
+
+                    Providing exceptional dental care with
+                    advanced technology, experienced
+                    professionals, and a patient-first
+                    approach for healthier, brighter smiles.
+
+                </p>
+
+            </div>
+
+
+            <!-- QUICK LINKS -->
+
+            <div>
+
+                <h3 class="footer-title">
+                    Quick Links
+                </h3>
+
+                <div class="footer-links">
+
+                    <a href="/">
+                        Home
+                    </a>
+
+                    <a href="{% url 'about' %}">
+                        About
+                    </a>
+
+                    <a href="{% url 'treatments' %}">
+                        Services
+                    </a>
+
+                    <a href="{% url 'testimonial' %}">
+                        Testimonials
+                    </a>
+
+                    <!-- <a href="{% url 'contact' %}">
+                        Contact
+                    </a> -->
+
+                </div>
+
+            </div>
+
+
+            <!-- TREATMENTS -->
+
+            <!-- <div>
+
+                <h3 class="footer-title">
+                    Treatments
+                </h3>
+
+                <div class="footer-links">
+
+                    <a href="#">
+                        Aligners
+                    </a>
+
+                    <a href="#">
+                        Implants
+                    </a>
+
+                    <a href="#">
+                        Root Canal
+                    </a>
+
+                    <a href="#">
+                        Braces
+                    </a>
+
+                </div>
+
+            </div> -->
+
+
+            <!-- CONTACT -->
+
+            <div>
+
+                <h3 class="footer-title">
+                    Contact
+                </h3>
+
+                <div class="footer-links">
+
+                    <a href="tel:+919895420118">
+                        +91 98954 20118
+                    </a>
+
+                    <a href="mailto:dr.shadiya.shareef@gmail.com">
+                        dr.shadiya.shareef@gmail.com
+                    </a>
+
+                    <a href="#">
+
+                        Haya Tower, Ground Floor,
+                        <br>
+                        Sastha Temple Road,
+                        <br>
+                        Manappattyparambu,
+                        <br>
+                        Kaloor, Ernakulam,
+                        <br>
+                        Kerala-682018
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            © 2026 Dr.Shadiya's Dental Clinic.
+            All Rights Reserved.
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- =========================================================
+     MOBILE MENU JAVASCRIPT
+========================================================= -->
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const menuButton =
+            document.getElementById("mobileMenuButton");
+
+        const mobileMenu =
+            document.getElementById("mobileMenu");
+
+
+        if (!menuButton || !mobileMenu) {
+            return;
+        }
+
+
+        /* =========================================
+           OPEN / CLOSE MENU
+        ========================================= */
+
+        menuButton.addEventListener("click", function (event) {
+
+            event.stopPropagation();
+
+            const isOpen =
+                mobileMenu.classList.contains("active");
+
+
+            if (isOpen) {
+
+                closeMobileMenu();
+
+            } else {
+
+                openMobileMenu();
+
+            }
+
+        });
+
+
+        /* =========================================
+           OPEN MENU
+        ========================================= */
+
+        function openMobileMenu() {
+
+            mobileMenu.classList.add("active");
+
+            menuButton.classList.add("active");
+
+            menuButton.setAttribute(
+                "aria-expanded",
+                "true"
+            );
+
+            menuButton.setAttribute(
+                "aria-label",
+                "Close navigation menu"
+            );
+
+        }
+
+
+        /* =========================================
+           CLOSE MENU
+        ========================================= */
+
+        function closeMobileMenu() {
+
+            mobileMenu.classList.remove("active");
+
+            menuButton.classList.remove("active");
+
+            menuButton.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+            menuButton.setAttribute(
+                "aria-label",
+                "Open navigation menu"
+            );
+
+        }
+
+
+        /* =========================================
+           CLOSE WHEN CLICKING A LINK
+        ========================================= */
+
+        const mobileLinks =
+            mobileMenu.querySelectorAll("a");
+
+
+        mobileLinks.forEach(function (link) {
+
+            link.addEventListener(
+                "click",
+                function () {
+
+                    closeMobileMenu();
+
+                }
+            );
+
+        });
+
+
+        /* =========================================
+           CLOSE WHEN CLICKING OUTSIDE
+        ========================================= */
+
+        document.addEventListener(
+            "click",
+            function (event) {
+
+                const clickedInsideMenu =
+                    mobileMenu.contains(event.target);
+
+                const clickedButton =
+                    menuButton.contains(event.target);
+
+
+                if (
+                    !clickedInsideMenu &&
+                    !clickedButton
+                ) {
+
+                    closeMobileMenu();
+
+                }
+
+            }
+        );
+
+
+        /* =========================================
+           CLOSE WITH ESC KEY
+        ========================================= */
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (event.key === "Escape") {
+
+                    closeMobileMenu();
+
+                }
+
+            }
+        );
+
+
+        /* =========================================
+           CLOSE MENU WHEN RESIZING TO DESKTOP
+        ========================================= */
+
+        window.addEventListener(
+            "resize",
+            function () {
+
+                if (window.innerWidth > 1050) {
+
+                    closeMobileMenu();
+
+                }
+
+            }
+        );
+
+    });
+
+</script>
+
+
+{% block extra_js %}{% endblock %}
+
+
+</body>
+
+</html>
