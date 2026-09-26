@@ -215,15 +215,13 @@ LOGIN_URL = 'login_page'
 # ==================================================
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
 EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_USE_TLS = False
 
-EMAIL_PORT = 587
-
-EMAIL_USE_TLS = True
-
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-
+# Uses the environment variable if set, otherwise defaults directly to dr.shadiyasofficial@gmail.com
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'dr.shadiyasofficial@gmail.com')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = f"Dr. Shadiya's Dental Clinic <{EMAIL_HOST_USER}>"
