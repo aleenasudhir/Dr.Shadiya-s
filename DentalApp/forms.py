@@ -19,9 +19,13 @@ class AppointmentForm(forms.ModelForm):
         widget=forms.RadioSelect
     )
 
+    # Use CharField so Django keeps it as exact text '13:30' (no seconds added)
+    appointment_time = forms.CharField(
+        widget=forms.HiddenInput(attrs={'id': 'id_appointment_time'})
+    )
+
     class Meta:
         model = Appointment
-
         fields = [
             'name',
             'phone',
@@ -33,92 +37,39 @@ class AppointmentForm(forms.ModelForm):
         ]
 
         widgets = {
-            'name': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Enter your full name',
-            }),
-
-            'phone': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Enter your WhatsApp / phone number',
-            }),
-
-            'email': forms.EmailInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Enter your email address (optional)',
-            }),
-
-            'other_concern': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Please tell us what you need help with',
-            }),
-
-            'appointment_date': forms.DateInput(
-                attrs={
-                    'class': 'date-input',
-                    'type': 'date',
-                }
-            ),
-
-            'appointment_time': forms.Select(
-                attrs={
-                    'class': 'form-control',
-                }
-            ),
-        }
-
-    class Meta:
-        model = Appointment
-
-        fields = [
-            'name',
-            'phone',
-            'email',
-            'concern',
-            'other_concern',
-            'appointment_date',
-            'appointment_time',
-        ]
-
-        widgets = {
-
             'name': forms.TextInput(attrs={
                 'placeholder': 'Your full name',
                 'class': 'form-control'
             }),
-
             'phone': forms.TextInput(attrs={
                 'placeholder': 'WhatsApp / Phone number',
                 'class': 'form-control'
             }),
-
             'email': forms.EmailInput(attrs={
                 'placeholder': 'Email address',
                 'class': 'form-control'
             }),
-
-            'concern': forms.RadioSelect(),
-
             'other_concern': forms.Textarea(attrs={
                 'placeholder': 'Please tell us briefly about your concern...',
                 'class': 'form-control',
                 'rows': 4
             }),
-
             'appointment_date': forms.DateInput(attrs={
                 'type': 'date',
                 'class': 'form-control'
             }),
-
-            'appointment_time': forms.Select(attrs={
-                'class': 'form-control'
-            }),
         }
 
+    # Clean function placed directly inside the form class
+    def clean_appointment_time(self):
+        time = self.cleaned_data.get("appointment_time")
+        if time:
+            # Strips any extra seconds down to "HH:MM"
+            return str(time)[:5]
+        return time
+
     def clean(self):
-
         cleaned_data = super().clean()
-
         concern = cleaned_data.get('concern')
         other_concern = cleaned_data.get('other_concern')
 

@@ -295,7 +295,7 @@
 }
 
 /* =========================================================
-   DATE & TIME SLOTS
+   DATE & TIME SLOTS (BOOKMYSHOW STYLE)
 ========================================================= */
 .date-wrapper {
     max-width: 360px;
@@ -353,6 +353,7 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 11px;
+    margin-top: 10px;
 }
 
 .time-slot {
@@ -366,17 +367,19 @@
 }
 
 .time-slot label {
-    height: 46px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 1px solid #ded6ca;
     border-radius: 10px;
     background: #fff;
-    color: #444;
-    font-size: 13px;
+    color: #183153;
+    font-size: 13.5px;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.22s ease;
+    user-select: none;
 }
 
 .time-slot label:hover {
@@ -385,18 +388,20 @@
 }
 
 .time-slot input:checked + label {
-    background: #c19a5d;
-    border-color: #c19a5d;
-    color: #fff;
-    box-shadow: 0 5px 14px rgba(174,130,63,0.20);
+    background: #c19a5d !important;
+    border-color: #c19a5d !important;
+    color: #fff !important;
+    box-shadow: 0 5px 14px rgba(174,130,63,0.25);
 }
 
 .time-slot.booked label {
-    background: #f2f0ed;
-    color: #aaa;
-    border-color: #e5e1db;
+    background: #f1efe9;
+    color: #aaa49b;
+    border-color: #e4dfd7;
     cursor: not-allowed;
     text-decoration: line-through;
+    opacity: 0.65;
+    pointer-events: none;
 }
 
 .no-slots {
@@ -480,12 +485,37 @@
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 8px 20px rgba(24, 49, 83, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
-.submit-btn:hover {
+.submit-btn:hover:not(:disabled) {
     background: linear-gradient(135deg, #b58a4d, #9e733a);
     transform: translateY(-1px);
     box-shadow: 0 10px 25px rgba(160,117,56,0.25);
+}
+
+.submit-btn:disabled {
+    opacity: 0.78;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* Button Spinner */
+.btn-spinner {
+    display: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: btn-spin 0.75s linear infinite;
+}
+
+@keyframes btn-spin {
+    to { transform: rotate(360deg); }
 }
 
 .security-note {
@@ -658,13 +688,12 @@
                             </div>
                         </div>
 
-                        <!-- EMAIL (STRICTLY REQUIRED FOR CONFIRMATIONS) -->
+                        <!-- EMAIL -->
                         <div class="field-group">
                             <label for="id_email">
                                 Email Address <span class="required">*</span>
                             </label>
                             {{ form.email }}
-                            
                             <div class="error-message" id="emailError">
                                 {% for error in form.email.errors %}{{ error }}{% endfor %}
                             </div>
@@ -727,16 +756,14 @@
                     <!-- TIME HEADING & SLOTS -->
                     <div class="time-heading">
                         <h3>Choose Time</h3>
-                        <p>Available time slots for the selected date</p>
+                        <p id="slotsInstruction">Select a date above to view available slots.</p>
                     </div>
 
                     <div class="time-slots" id="timeSlots"></div>
                     <div class="no-slots" id="noSlots"></div>
 
-                    <!-- HIDDEN DJANGO TIME FIELD -->
-                    <div style="display:none;">
-                        {{ form.appointment_time }}
-                    </div>
+                    <!-- HIDDEN APPOINTMENT TIME (Populated by Clicked Slot) -->
+                    <input type="hidden" name="appointment_time" id="id_appointment_time">
                     <div class="error-message" id="timeError">
                         {% for error in form.appointment_time.errors %}{{ error }}{% endfor %}
                     </div>
@@ -750,9 +777,12 @@
                     </div>
                 </div>
 
-                <!-- SUBMIT BUTTON -->
+                <!-- SUBMIT BUTTON WITH SPINNER -->
                 <div class="submit-area">
-                    <button type="submit" class="submit-btn">BOOK APPOINTMENT</button>
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <span class="btn-spinner" id="btnSpinner"></span>
+                        <span id="btnText">BOOK APPOINTMENT</span>
+                    </button>
                     <div class="security-note">
                         🔒 Your information is secure and confidential.
                     </div>
@@ -787,7 +817,7 @@
     </div>
 </div>
 
-<!-- JAVASCRIPT VALIDATION & SLOT CONTROLLER -->
+<!-- JAVASCRIPT VALIDATION & BOOKMYSHOW SLOT CONTROLLER -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const concernInputs = document.querySelectorAll('input[name="concern"]');
@@ -797,13 +827,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const phoneInput = document.getElementById("id_phone");
     const emailInput = document.getElementById("id_email");
     const dateInput = document.getElementById("id_appointment_date");
-    const djangoTimeSelect = document.getElementById("id_appointment_time");
+    const hiddenTimeInput = document.getElementById("id_appointment_time");
 
     const timeSlots = document.getElementById("timeSlots");
     const noSlots = document.getElementById("noSlots");
+    const slotsInstruction = document.getElementById("slotsInstruction");
     const appointmentForm = document.getElementById("appointmentForm");
 
-    // Add form-control class to Django form inputs dynamically if missing
+    const submitBtn = document.getElementById("submitBtn");
+    const btnSpinner = document.getElementById("btnSpinner");
+    const btnText = document.getElementById("btnText");
+
+    // Ensure styling classes exist
     [nameInput, phoneInput, emailInput, dateInput].forEach(input => {
         if (input && !input.classList.contains("form-control")) {
             input.classList.add("form-control");
@@ -828,89 +863,9 @@ document.addEventListener("DOMContentLoaded", function () {
         dateInput.min = todayString;
     }
 
-    // Dynamic Time Slot Retrieval
-    if (dateInput) {
-        dateInput.addEventListener("change", function () {
-            const selectedDate = this.value;
-            timeSlots.innerHTML = "";
-            noSlots.style.display = "none";
-            if (djangoTimeSelect) djangoTimeSelect.value = "";
-
-            if (!selectedDate) return;
-
-            const selected = new Date(selectedDate + "T00:00:00");
-            if (selected.getDay() === 0) {
-                noSlots.style.display = "block";
-                noSlots.innerHTML = "Sunday is a holiday.<br>Please select another date.";
-                return;
-            }
-
-            fetch("{% url 'available_times' %}?date=" + encodeURIComponent(selectedDate))
-                .then(response => {
-                    if (!response.ok) throw new Error("Server error: " + response.status);
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.is_holiday) {
-                        noSlots.style.display = "block";
-                        noSlots.innerHTML = "Sunday is a holiday.<br>Please select another date.";
-                        return;
-                    }
-
-                    const availableTimes = data.available_times || [];
-                    const bookedTimes = data.booked_times || [];
-
-                    availableTimes.forEach(time => {
-                        const wrapper = document.createElement("div");
-                        wrapper.className = "time-slot";
-
-                        const input = document.createElement("input");
-                        input.type = "radio";
-                        input.name = "time_visual";
-                        input.value = time.value;
-                        input.id = "time_" + time.value.replace(":", "");
-
-                        const label = document.createElement("label");
-                        label.htmlFor = input.id;
-                        label.textContent = time.label;
-
-                        input.addEventListener("change", function () {
-                            if (djangoTimeSelect) djangoTimeSelect.value = this.value;
-                            document.getElementById("timeError").textContent = "";
-                        });
-
-                        wrapper.appendChild(input);
-                        wrapper.appendChild(label);
-                        timeSlots.appendChild(wrapper);
-                    });
-
-                    bookedTimes.forEach(bookedTime => {
-                        const wrapper = document.createElement("div");
-                        wrapper.className = "time-slot booked";
-
-                        const label = document.createElement("label");
-                        label.textContent = getTimeLabel(bookedTime) + " • Booked";
-
-                        wrapper.appendChild(label);
-                        timeSlots.appendChild(wrapper);
-                    });
-
-                    if (availableTimes.length === 0 && bookedTimes.length === 0) {
-                        noSlots.style.display = "block";
-                        noSlots.textContent = "No appointment slots are available for this date.";
-                    }
-                })
-                .catch(error => {
-                    console.error("Slot fetch error:", error);
-                    timeSlots.innerHTML = "";
-                    noSlots.style.display = "block";
-                    noSlots.textContent = "Unable to load slots. Please check your connection.";
-                });
-        });
-    }
-
-    function getTimeLabel(time) {
-        const parts = time.split(":");
+    // Helper: format 24h string ("14:30") to 12h label ("02:30 PM")
+    function getTimeLabel(time24) {
+        const parts = time24.split(":");
         let hour = parseInt(parts[0], 10);
         const minute = parts[1];
         const suffix = hour >= 12 ? "PM" : "AM";
@@ -919,11 +874,133 @@ document.addEventListener("DOMContentLoaded", function () {
         return `${String(hour).padStart(2, "0")}:${minute} ${suffix}`;
     }
 
-    // Front-end Form Validation (Email & Fields)
+    // Dynamic Time Slot Retrieval
+    if (dateInput) {
+        dateInput.addEventListener("change", function () {
+            const selectedDate = this.value;
+            timeSlots.innerHTML = "";
+            noSlots.style.display = "none";
+            if (hiddenTimeInput) hiddenTimeInput.value = "";
+
+            if (!selectedDate) {
+                if (slotsInstruction) slotsInstruction.textContent = "Select a date above to view available slots.";
+                return;
+            }
+
+            // Check if Sunday client-side
+            const selected = new Date(selectedDate + "T00:00:00");
+            if (selected.getDay() === 0) {
+                noSlots.style.display = "block";
+                noSlots.innerHTML = "Sunday is a holiday.<br>Please select another date.";
+                if (slotsInstruction) slotsInstruction.textContent = "";
+                return;
+            }
+
+            if (slotsInstruction) slotsInstruction.textContent = "Loading available slots...";
+
+            fetch("{% url 'available_times' %}?date=" + encodeURIComponent(selectedDate))
+                .then(response => {
+                    if (!response.ok) throw new Error("Server error: " + response.status);
+                    return response.json();
+                })
+                .then(data => {
+                    timeSlots.innerHTML = "";
+
+                    if (data.is_holiday) {
+                        noSlots.style.display = "block";
+                        noSlots.innerHTML = "Sunday is a holiday.<br>Please select another date.";
+                        if (slotsInstruction) slotsInstruction.textContent = "";
+                        return;
+                    }
+
+                    const availableTimes = data.available_times || [];
+                    const bookedTimes = data.booked_times || [];
+
+                    if (availableTimes.length === 0 && bookedTimes.length === 0) {
+                        noSlots.style.display = "block";
+                        noSlots.textContent = "No appointment slots are available for this date.";
+                        if (slotsInstruction) slotsInstruction.textContent = "";
+                        return;
+                    }
+
+                    if (slotsInstruction) slotsInstruction.textContent = "Click an available slot to book:";
+
+                    // Merge and sort in chronological order
+                    const unifiedSlots = [];
+
+                    availableTimes.forEach(item => {
+                        unifiedSlots.push({
+                            value: item.value,
+                            label: item.label,
+                            isBooked: false
+                        });
+                    });
+
+                    bookedTimes.forEach(time24 => {
+                        unifiedSlots.push({
+                            value: time24,
+                            label: getTimeLabel(time24),
+                            isBooked: true
+                        });
+                    });
+
+                    // Sort chronologically ("09:30" -> "10:30" ...)
+                    unifiedSlots.sort((a, b) => a.value.localeCompare(b.value));
+
+                    // Render slots
+                    unifiedSlots.forEach(slot => {
+                        const wrapper = document.createElement("div");
+                        const inputId = "slot_" + slot.value.replace(":", "");
+
+                        if (slot.isBooked) {
+                            wrapper.className = "time-slot booked";
+                            const label = document.createElement("label");
+                            label.textContent = slot.label;
+                            label.title = "This slot is already booked";
+                            wrapper.appendChild(label);
+                        } else {
+                            wrapper.className = "time-slot";
+
+                            const input = document.createElement("input");
+                            input.type = "radio";
+                            input.name = "slot_selection";
+                            input.id = inputId;
+                            input.value = slot.value;
+
+                            const label = document.createElement("label");
+                            label.htmlFor = inputId;
+                            label.textContent = slot.label;
+
+                            input.addEventListener("change", function () {
+                                if (hiddenTimeInput) {
+                                    hiddenTimeInput.value = this.value;
+                                }
+                                const timeErr = document.getElementById("timeError");
+                                if (timeErr) timeErr.textContent = "";
+                            });
+
+                            wrapper.appendChild(input);
+                            wrapper.appendChild(label);
+                        }
+
+                        timeSlots.appendChild(wrapper);
+                    });
+                })
+                .catch(error => {
+                    console.error("Slot fetch error:", error);
+                    timeSlots.innerHTML = "";
+                    noSlots.style.display = "block";
+                    noSlots.textContent = "Unable to load slots. Please check your connection.";
+                    if (slotsInstruction) slotsInstruction.textContent = "";
+                });
+        });
+    }
+
+    // Front-end Form Validation & Submission Loading Trigger
     appointmentForm.addEventListener("submit", function (event) {
         let isValid = true;
 
-        // Clear previous error styles
+        // Clear previous error messages
         document.querySelectorAll(".error-message").forEach(el => el.textContent = "");
         document.querySelectorAll(".form-control").forEach(el => el.classList.remove("input-error"));
 
@@ -936,12 +1013,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Validate Phone
         if (phoneInput && !phoneInput.value.trim()) {
-            document.getElementById("phoneError").textContent = "Please enter a valid contact number.";
+            document.getElementById("phoneError").textContent = "Please enter a valid WhatsApp or phone number.";
             phoneInput.classList.add("input-error");
             isValid = false;
         }
 
-        // Validate Required Email
+        // Validate Email
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (emailInput) {
             const emailVal = emailInput.value.trim();
@@ -950,7 +1027,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 emailInput.classList.add("input-error");
                 isValid = false;
             } else if (!emailRegex.test(emailVal)) {
-                document.getElementById("emailError").textContent = "Please provide a valid email format (e.g. name@domain.com).";
+                document.getElementById("emailError").textContent = "Please provide a valid email format.";
                 emailInput.classList.add("input-error");
                 isValid = false;
             }
@@ -963,21 +1040,26 @@ document.addEventListener("DOMContentLoaded", function () {
             isValid = false;
         }
 
-        // Validate Time Slot
-        if (djangoTimeSelect && !djangoTimeSelect.value) {
+        // Validate Time Slot Selection
+        if (hiddenTimeInput && !hiddenTimeInput.value) {
             document.getElementById("timeError").textContent = "Please select an available time slot.";
             isValid = false;
         }
 
         if (!isValid) {
             event.preventDefault();
-            // Scroll smoothly to the first errored input
-            const firstError = document.querySelector(".input-error");
+            const firstError = document.querySelector(".input-error, .error-message:not(:empty)");
             if (firstError) {
                 firstError.scrollIntoView({ behavior: "smooth", block: "center" });
-                firstError.focus();
             }
             return false;
+        }
+
+        // Form is valid: activate loading spinner and lock submit button
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            if (btnSpinner) btnSpinner.style.display = "inline-block";
+            if (btnText) btnText.textContent = "Processing booking...";
         }
     });
 });
