@@ -37,7 +37,19 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # DEBUG is True if not explicitly set to False in environment
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'dr-shadiyas-dental.onrender.com',
+    'drshadiyasdental.co.in',
+    'www.drshadiyasdental.co.in',
+    'localhost',
+    '127.0.0.1',
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://dr-shadiyas-dental.onrender.com',
+    'https://drshadiyasdental.co.in',
+    'https://www.drshadiyasdental.co.in',
+]
 
 
 # ==================================================
